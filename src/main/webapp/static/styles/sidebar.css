@@ -1,0 +1,18 @@
+.sidebar{
+    position: absolute;
+    top:110px;
+    width: 300px;
+    background-color: #02d5f8;
+    height: 98%;
+}
+.sideButton{
+    margin-left: 50px;
+    margin-top: 80px;
+    width: 200px;
+    height: 90px;
+    font-size: 30px;
+    color: #f1f1f1;
+    font-style: italic;
+    background: #316dba;
+    border: none;
+}
