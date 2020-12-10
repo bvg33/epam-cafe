@@ -1,25 +1,23 @@
 package com.epam.web.connection;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
 public class ConnectionFactory {
     static ProxyConnection createConnection()  {
-        //todo properties file
-        String url = "jdbc:mysql://localhost:3306/epamweb?useSSL=false&allowPublicKeyRetrieval=true";
-        Properties properties = new Properties();
-        properties.put("user", "root");
-        properties.put("password", "as122592as");
-        properties.put("autoReconnect", "true");
-        properties.put("characterEncoding", "UTF-8");
-        properties.put("useUnicode", "true");
         ProxyConnection proxyConnection = null;
         try {
+            String url = "jdbc:mysql://localhost:3306/epamweb";
+            Properties properties = new Properties();
+            properties.load(ConnectionFactory.class.getClassLoader().getResourceAsStream("connection/dbConnection.properties"));
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
             proxyConnection = new ProxyConnection(DriverManager.getConnection(url, properties));
-        } catch (SQLException e) {
-            //todo log
+        } catch (IOException | SQLException e) {
+            e.printStackTrace();//todo log
         }
         return proxyConnection;
     }

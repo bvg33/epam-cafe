@@ -1,6 +1,7 @@
 package com.epam.web;
 
 import com.epam.web.connection.ConnectionPool;
+import com.epam.web.context.RequestContextHelper;
 import com.epam.web.exceptions.ConnectionException;
 import com.epam.web.logic.command.Command;
 import com.epam.web.logic.command.CommandFactory;
@@ -13,7 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class Servlet extends HttpServlet {
-    //TODO при кэтче ошибки слать ее юзеру,закрыть все конекшены перед дестроем
+    //TODO при кэтче ошибки слать ее юзеру
+    //todo пагинация
     private static final String COMMAND = "command";
     private static final String REDIRECT_PATH = "/epam_cafe_war_exploded/controller?";
 
@@ -26,7 +28,6 @@ public class Servlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         process(req, resp);
     }
-    //todo remember me bug
     @Override
     public void destroy() {
         try {
@@ -41,7 +42,8 @@ public class Servlet extends HttpServlet {
         try {
             String commandParameter = req.getParameter(COMMAND);
             Command command = CommandFactory.createCommand(commandParameter);
-            CommandResult result = command.execute(req, resp);
+            RequestContextHelper contextHelper=new RequestContextHelper(req);
+            CommandResult result = command.execute(contextHelper, resp);
             dispatch(result, req, resp);
         } catch (Exception e) {
             e.printStackTrace();

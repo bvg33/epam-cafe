@@ -15,12 +15,12 @@ public class LanguageFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request= (HttpServletRequest) servletRequest;
-        RequestContextHelper requestHelper=new RequestContextHelper();
-        RequestContext requestContext=requestHelper.createContext(request);
+        RequestContextHelper requestHelper=new RequestContextHelper(request);
+        RequestContext requestContext=requestHelper.createContext();
         String language= (String) requestContext.getSessionAttribute("local");
         if(language==null){
             requestContext.addSessionAttribute("local","en");
-            requestHelper.updateRequest(request,requestContext);
+            requestHelper.updateRequest(requestContext);
         }
         filterChain.doFilter(servletRequest,servletResponse);
     }

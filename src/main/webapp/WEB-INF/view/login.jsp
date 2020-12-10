@@ -38,17 +38,20 @@
                 <fmt:message bundle="${loc}" key="locale.passwordPlaceholder" var="pswPlch"/>
                 <div>
                     <input type="password" class="input-field" placeholder="${pswPlch}" name="password"/>
-                    <button class="eye-button" type="button"><img src="${pageContext.request.contextPath}/static/images/eye.png"
-                                                                  width="35" height="27"></button>
+                    <button class="eye-button" type="button"><img
+                            src="${pageContext.request.contextPath}/static/images/eye.png"
+                            width="35" height="27"></button>
                 </div>
             </div>
             <fmt:message bundle="${loc}" key="locale.loginButtonValue" var="logBtn"/>
             <input class="button-login" type="submit" name="button" value="${logBtn}">
             </hr>
         </form>
-        <div class="error">
-            ${errorMessage}
-        </div>
+        <c:if test="${errorMessage=='true'}">
+            <div class="error">
+                <fmt:message bundle="${loc}" key="locale.loginError"/>
+            </div>
+        </c:if>
     </div>
 </div>
 <script src="${pageContext.request.contextPath}/static/js/HidePassword.js"></script>

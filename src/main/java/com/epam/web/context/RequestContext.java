@@ -38,8 +38,6 @@ public class RequestContext {
         return sessionAttributes.get(key);
     }
     public void removeSessionAttribute(String key){
-       // Object attribute=sessionAttributes.get(key);
-        //attribute=null;
-        //sessionAttributes.put(key,attribute);
+        sessionAttributes.put(key, null);
     }
 }

@@ -2,6 +2,7 @@ package com.epam.web.connection;
 
 import com.epam.web.exceptions.ConnectionException;
 
+import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Queue;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -15,7 +16,7 @@ public class ConnectionPool {
     private static ConnectionPool instance;
     private static final int POOL_SIZE = 10;
 
-    private ConnectionPool() {
+    private ConnectionPool()  {
         availableConnections = new ArrayDeque<>(POOL_SIZE);
         connectionsInUse = new ArrayDeque<>(POOL_SIZE);
         for (int i = 0; i < POOL_SIZE; i++) {

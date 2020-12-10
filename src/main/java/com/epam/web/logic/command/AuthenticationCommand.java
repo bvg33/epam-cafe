@@ -1,5 +1,6 @@
 package com.epam.web.logic.command;
 
+import com.epam.web.context.RequestContextHelper;
 import com.epam.web.logic.service.AuthenticationService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,8 +15,8 @@ public class AuthenticationCommand implements Command {
     }
 
     @Override
-    public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
-        boolean result=service.hasSession(request);
+    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) {
+        boolean result=service.hasSession(helper);
         if(result){
             return CommandResult.forward(MAIN_PAGE_PATH);
         }

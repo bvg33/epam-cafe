@@ -17,7 +17,16 @@
 <jsp:include page="templates/header.jsp"/>
 <jsp:include page="templates/sidebar.jsp"/>
 <div class="workplace">
-
+    <div class="page-info">
+        <table id="table"></table>
+        <ul id="pagination"></ul>
+    </div>
 </div>
+<c:forEach var="user" items="${users}">
+    <input type="hidden" class="allUsersNames" value="${user.getName()}"/>
+    <input type="hidden" class="allUsersSurnames" value="${user.getSurname()}"/>
+    <input type="hidden" class="allUsersAges" value="${user.getAge()}"/>
+</c:forEach>
+<script  src="${pageContext.request.contextPath}/static/js/Pagination.js"></script>
 </body>
 </html>

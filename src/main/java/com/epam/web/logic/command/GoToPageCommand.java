@@ -1,5 +1,7 @@
 package com.epam.web.logic.command;
 
+import com.epam.web.context.RequestContextHelper;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,7 +13,7 @@ public class GoToPageCommand implements Command {
     }
 
     @Override
-    public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
+    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) {
         return CommandResult.forward(page);
     }
 }

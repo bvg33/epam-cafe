@@ -8,13 +8,12 @@ import javax.servlet.http.HttpServletResponse;
 
 public class LanguageCommand implements Command {
     @Override
-    public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
-        RequestContextHelper requestContextHelper=new RequestContextHelper();
-        RequestContext requestContext=requestContextHelper.createContext(request);
+    public CommandResult execute(RequestContextHelper helper ,HttpServletResponse response) {
+        RequestContext requestContext=helper.createContext();
         String language = requestContext.getRequestParameter("lang");
         requestContext.addSessionAttribute("local",language);
         String path=requestContext.getRequestParameter("path");
-        requestContextHelper.updateRequest(request,requestContext);
+        helper.updateRequest(requestContext);
         return CommandResult.forward(path);
     }
 }

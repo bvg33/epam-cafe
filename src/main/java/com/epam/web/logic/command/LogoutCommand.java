@@ -12,15 +12,14 @@ public class LogoutCommand implements Command {
     private static final String LOGIN_PAGE_ADDRESS = "WEB-INF/view/login.jsp";
 
     @Override
-    public CommandResult execute(HttpServletRequest request, HttpServletResponse response) {
-        RequestContextHelper contextHelper=new RequestContextHelper();
-        RequestContext context=contextHelper.createContext(request);
+    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) {
+        RequestContext context=helper.createContext();
         context.removeSessionAttribute(SESSION_ATTRIBUTE);
-        contextHelper.updateRequest(request,context);
-        removeCookies(request,response);
+        helper.updateRequest(context);
+        removeCookies(response);
         return CommandResult.forward(LOGIN_PAGE_ADDRESS);
     }
-    private void removeCookies(HttpServletRequest request,HttpServletResponse response){
+    private void removeCookies(HttpServletResponse response){
         Cookie cookie=new Cookie("epam-cafe",null);
         cookie.setMaxAge(0);
         response.addCookie(cookie);

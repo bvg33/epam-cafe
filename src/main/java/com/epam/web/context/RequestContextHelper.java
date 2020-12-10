@@ -7,25 +7,35 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RequestContextHelper {
-    public RequestContext createContext(HttpServletRequest request){
+    private final HttpServletRequest request;
+
+    public RequestContextHelper(HttpServletRequest request) {
+        this.request = request;
+    }
+
+    public HttpServletRequest getRequest() {
+        return request;
+    }
+
+    public RequestContext createContext(){
         Enumeration<String> requestParameterNames=request.getParameterNames();
         Enumeration<String>requestAttributesNames=request.getAttributeNames();
         HttpSession session=request.getSession();
         Enumeration<String>sessionAttributesNames=session.getAttributeNames();
-        Map<String,String> requestParameters=createRequestParametersMap(requestParameterNames,request);
-        Map<String,Object> requestAttributes=createRequestAttributesMap(requestAttributesNames,request);
+        Map<String,String> requestParameters=createRequestParametersMap(requestParameterNames);
+        Map<String,Object> requestAttributes=createRequestAttributesMap(requestAttributesNames);
         Map<String,Object> sessionAttributes=createSessionAttributesMap(sessionAttributesNames,session);
         return new RequestContext(requestParameters,requestAttributes,sessionAttributes);
     }
-    public void updateRequest(HttpServletRequest request,RequestContext context){
+    public void updateRequest(RequestContext context){
         Map<String,Object>requestAttributes=context.getAllRequestAttributes();
         Map<String,Object>sessionAttributes=context.getAllSessionAttributes();
         HttpSession session=request.getSession();
         fillSessionAttributes(session,sessionAttributes);
-        fillRequestAttributes(request,requestAttributes);
+        fillRequestAttributes(requestAttributes);
     }
 
-    private void fillRequestAttributes(HttpServletRequest request, Map<String, Object> attributes) {
+    private void fillRequestAttributes(Map<String, Object> attributes) {
         for (Map.Entry<String, Object> entry : attributes.entrySet()) {
             request.setAttribute(entry.getKey(),entry.getValue());
         }
@@ -38,7 +48,7 @@ public class RequestContextHelper {
     }
 
 
-    private Map<String,String> createRequestParametersMap(Enumeration<String> names,HttpServletRequest request){
+    private Map<String,String> createRequestParametersMap(Enumeration<String> names){
         Map<String,String>resultMap=new HashMap<>();
         while (names.hasMoreElements()){
             String name=names.nextElement();
@@ -48,7 +58,7 @@ public class RequestContextHelper {
         return resultMap;
     }
 
-    private Map<String,Object> createRequestAttributesMap(Enumeration<String> names,HttpServletRequest request){
+    private Map<String,Object> createRequestAttributesMap(Enumeration<String> names){
         Map<String,Object>resultMap=new HashMap<>();
         while (names.hasMoreElements()){
             String name=names.nextElement();

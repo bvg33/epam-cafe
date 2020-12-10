@@ -1,11 +1,14 @@
 package com.epam.web.logic.service;
 
+import com.epam.web.context.RequestContextHelper;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class AuthenticationService {
-    public boolean hasSession(HttpServletRequest request) {
+    public boolean hasSession(RequestContextHelper contextHelper) {
+        HttpServletRequest request=contextHelper.getRequest();
         HttpSession session=request.getSession();
         String sessionId=session.getId();
         Cookie[] cookies=request.getCookies();
