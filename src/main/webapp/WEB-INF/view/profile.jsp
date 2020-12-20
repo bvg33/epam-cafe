@@ -19,32 +19,36 @@
 <jsp:include page="templates/header.jsp"/>
 <div class="workplace">
     <c:if test="${sessionScope.user!=null}">
-        <div class="profile-info">
-            <div class="info">
-                <label> <fmt:message bundle="${loc}" key="locale.login"/></label>
-                <input class="value" type="text" value="${sessionScope.user.login}">
-            </div>
-            <div class="info">
-                <label><fmt:message bundle="${loc}" key="locale.name"/></label>
-                <div>
-                    <input class="value" type="text" value="${sessionScope.user.name}">
+        <form name="updateUserInfo" action=${pageContext.request.contextPath}/controller method="get">
+            <div class="profile-info">
+                <div class="info">
+                    <label> <fmt:message bundle="${loc}" key="locale.login"/></label>
+                    <input class="value" type="text" value="${sessionScope.user.login}" name="login">
                 </div>
-            </div>
-            <div class="info">
-                <label><fmt:message bundle="${loc}" key="locale.cardNumber"/></label>
-                <div>
-                    <input class="value" type="text" value="${sessionScope.user.cardNumber}">
+                <div class="info">
+                    <label><fmt:message bundle="${loc}" key="locale.name"/></label>
+                    <div>
+                        <input class="value" type="text" value="${sessionScope.user.name}" name="name">
+                    </div>
                 </div>
-            </div>
-            <div class="info">
-                <label><fmt:message bundle="${loc}" key="locale.loyality"/></label>
-                <div>
-                    <label class="value"><fmt:message bundle="${loc}" key="locale.loyalityMessage"/> ${sessionScope.user.loyality}</label>
+                <div class="info">
+                    <label><fmt:message bundle="${loc}" key="locale.cardNumber"/></label>
+                    <div>
+                        <input class="value" type="text" value="${sessionScope.user.cardNumber}" name="cardNumber">
+                    </div>
                 </div>
+                <div class="info">
+                    <label><fmt:message bundle="${loc}" key="locale.loyality"/></label>
+                    <div>
+                        <label class="value"><fmt:message bundle="${loc}"
+                                                          key="locale.loyalityMessage"/> ${sessionScope.user.loyality}</label>
+                    </div>
+                </div>
+                <fmt:message bundle="${loc}" key="locale.saveChangesButton" var="saveChngBtn"/>
+                <input class="make-changes" type="submit" value="${saveChngBtn}"/>
+                <input type="hidden" name="command" value="updateUserInfo"/>
             </div>
-            <fmt:message bundle="${loc}" key="locale.saveChangesButton" var="saveChngBtn"/>
-            <input class="make-changes" type="submit" value="${saveChngBtn}"/>
-        </div>
+        </form>
     </c:if>
 </div>
 <jsp:include page="templates/sidebar.jsp"/>

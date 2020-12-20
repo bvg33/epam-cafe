@@ -14,10 +14,9 @@ import java.util.Optional;
 public class LoginCommand implements Command {
     private static final String PASSWORD_PARAMETER = "password";
     private static final String LOGIN_PARAMETER = "login";
-    private static final String GOTO_MAIN_PAGE_ADDRESS = "WEB-INF/view/order.jsp";
+    private static final String GOTO_MAIN_PAGE_ADDRESS = "command=goToOrderPage";
     private static final String LOGIN_PAGE_ADDRESS = "WEB-INF/view/login.jsp";
     private LoginService loginService;
-    private NewUser users[]=new NewUser[13];
 
     public LoginCommand(LoginService loginService) {
         this.loginService = loginService;
@@ -25,9 +24,6 @@ public class LoginCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) {
-        for(int i=0;i<13;i++){
-            users[i]=new NewUser("name"+i,"surname","30");
-        }
         RequestContext requestContext=helper.createContext();
         String password = requestContext.getRequestParameter(PASSWORD_PARAMETER);
         String login = requestContext.getRequestParameter(LOGIN_PARAMETER);
@@ -35,9 +31,8 @@ public class LoginCommand implements Command {
         if (optionalResult.isPresent()) {
             requestContext.addSessionAttribute("user",optionalResult.get());
             createCookie(helper.getRequest(),response);
-            requestContext.addRequestAttribute("users",users);
             helper.updateRequest(requestContext);
-            return CommandResult.forward(GOTO_MAIN_PAGE_ADDRESS);
+            return CommandResult.redirect(GOTO_MAIN_PAGE_ADDRESS);
         }
         requestContext.addRequestAttribute("errorMessage",true);
         helper.updateRequest(requestContext);

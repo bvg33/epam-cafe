@@ -15,9 +15,8 @@ import java.io.IOException;
 
 public class Servlet extends HttpServlet {
     //TODO при кэтче ошибки слать ее юзеру
-    //todo пагинация
     private static final String COMMAND = "command";
-    private static final String REDIRECT_PATH = "/epam_cafe_war_exploded/controller?";
+    private static final String PATH = "/epam_cafe_war_exploded/controller?";
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
@@ -54,7 +53,7 @@ public class Servlet extends HttpServlet {
         resp.setHeader("Cache-Control", "private, no-store, no-cache, must-revalidate");
         resp.setHeader("Pragma", "no-cache");
         if (result.isRedirect()) {
-            resp.sendRedirect(REDIRECT_PATH + result.getPage());
+            resp.sendRedirect(PATH + result.getPage());
         } else {
             req.getRequestDispatcher(result.getPage()).forward(req, resp);
         }

@@ -1,6 +1,8 @@
 package com.epam.web.dao;
 
 import com.epam.web.dao.mapper.RowMapper;
+import com.epam.web.dao.parser.EntityFieldExtractor;
+import com.epam.web.entity.User;
 import com.epam.web.exceptions.DaoException;
 import com.sun.corba.se.spi.ior.Identifiable;
 
@@ -10,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public abstract class AbstractDao<T extends Identifiable> implements Dao<T> {
@@ -47,6 +50,13 @@ public abstract class AbstractDao<T extends Identifiable> implements Dao<T> {
         }
         return entities;
     }
+    protected void executeUpdate(String query,Object...params) throws DaoException {
+        try (PreparedStatement statement = createStatement(query, params)) {
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException("Execute query exception ", e);
+        }
+    }
 
     private PreparedStatement createStatement(String query, Object... params) throws DaoException {
         try {
@@ -56,14 +66,24 @@ public abstract class AbstractDao<T extends Identifiable> implements Dao<T> {
             }
             return preparedStatement;
         } catch (SQLException e) {
-            throw new DaoException("Prepare Statement exception");
+            throw new DaoException("Prepare Statement exception",e);
         }
     }
 
     @Override
-    public List<T> getAll() {
-        return null;
+    public List<T> getAll(String tableName) throws DaoException {
+        String query="select * from "+tableName;
+        List<T>entities=new ArrayList<>();
+        try (PreparedStatement statement = createStatement(query);
+             ResultSet resultSet = statement.executeQuery()) {
+            while (resultSet.next()){
+                T entity = rowMapper.map(resultSet);
+                entities.add(entity);
+            }
+        } catch (SQLException | DaoException e) {
+            throw new DaoException("Get All exception");
+        }
+        return entities;
     }
-
 }
 

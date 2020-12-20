@@ -2,6 +2,7 @@ package com.epam.web.dao.helper;
 
 import com.epam.web.connection.ConnectionPool;
 import com.epam.web.connection.ProxyConnection;
+import com.epam.web.dao.menudao.MenuDaoImpl;
 import com.epam.web.dao.userdao.UserDao;
 import com.epam.web.dao.userdao.UserDaoImpl;
 import com.epam.web.exceptions.DaoException;
@@ -18,6 +19,7 @@ public class DaoHelper implements AutoCloseable{
     public UserDao createUserDao(){
         return new UserDaoImpl(connection);
     }
+    public MenuDaoImpl createMenuDao(){return new MenuDaoImpl(connection);}
 
     @Override
     public void close() throws Exception {
