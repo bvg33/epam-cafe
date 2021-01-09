@@ -4,6 +4,7 @@ import com.epam.web.dao.helper.DaoHelper;
 import com.epam.web.dao.helper.DaoHelperFactory;
 import com.epam.web.dao.userdao.UserDao;
 import com.epam.web.entity.User;
+import com.epam.web.exceptions.DaoException;
 
 import java.util.Optional;
 
@@ -14,13 +15,10 @@ public class LoginService {
         this.daoHelperFactory = daoHelperFactory;
     }
 
-    public Optional<User> login(String password, String login) {
+    public Optional<User> login(String password, String login) throws DaoException {
         try (DaoHelper daoHelper=daoHelperFactory.createDaoHelper()) {
             UserDao dao=daoHelper.createUserDao();
             return dao.findUserByLoginAndPassword(login, password);
-        } catch (Exception e) {
-            //todo log
         }
-        return Optional.empty();
     }
 }

@@ -40,4 +40,7 @@ public class RequestContext {
     public void removeSessionAttribute(String key){
         sessionAttributes.put(key, null);
     }
+    public void removeRequestParameter(String key){
+        requestParameters.put(key, null);
+    }
 }

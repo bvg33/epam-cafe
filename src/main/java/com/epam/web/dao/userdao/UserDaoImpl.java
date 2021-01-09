@@ -1,25 +1,26 @@
 package com.epam.web.dao.userdao;
 
+import com.epam.web.connection.ProxyConnection;
 import com.epam.web.dao.AbstractDao;
+import com.epam.web.dao.extractor.EntityFieldExtractor;
+import com.epam.web.dao.extractor.FieldExtractorFactory;
 import com.epam.web.dao.mapper.RowMapper;
-import com.epam.web.dao.parser.EntityFieldExtractor;
+import com.epam.web.dao.mapper.RowMapperFactory;
 import com.epam.web.entity.User;
 import com.epam.web.exceptions.DaoException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.Map;
+import java.util.List;
 import java.util.Optional;
 
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
-    private static final String FIND_BY_LOGIN_AND_PASSWORD = "select * from " + User.TABLE + " u inner join role r on u.role_id=r.id where login=? and password=?";
-    private static final String FIND_BY_LOGIN = "select * from " + User.TABLE + " u inner join role r on u.role_id=r.id where login=?";
-    private final EntityFieldExtractor<User> fieldExtractor = EntityFieldExtractor.createFieldExtractor(User.TABLE);
+    private static final String FIND_BY_LOGIN_AND_PASSWORD = "select * from " + User.TABLE + " where login=? and password=? and points>0";
+    private static final String FIND_BY_LOGIN = "select * from " + User.TABLE + " where login=?";
+   // private static final String UPDATE_NAME_LOGIN_QUERY = "update " + User.TABLE + " set name=?,login=?,cardnumber=? where id=?";
+    private static final String FIND_USERS_BY_ROLE = "select * from " + User.TABLE + " where role=?";
+  //  private static final String UPDATE_LOYALITY=  "update " + User.TABLE + " set points=? where id=?";
 
-    public UserDaoImpl(Connection connection) {
-        super(connection, RowMapper.createMapper(User.TABLE));
+    public UserDaoImpl(ProxyConnection connection) {
+        super(connection, RowMapperFactory.createMapper(User.TABLE), FieldExtractorFactory.createFieldExtractor(User.TABLE),User.TABLE);
     }
 
     @Override
@@ -33,26 +34,28 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public void save(User item) throws DaoException {
-        String updateQuery = "update " + User.TABLE + " set name=?,login=?,cardnumber=? where id=?";
-        EntityFieldExtractor userEntityFieldExtractor = EntityFieldExtractor.createFieldExtractor(User.TABLE);
-        Map<String, String> fields = userEntityFieldExtractor.parse(item);
-        String newName=fields.get("name");
-        String newLogin=fields.get("login");
-        String newCardNumber=fields.get("cardNumber");
-        int id=item.getId();
-        executeUpdate(updateQuery,newName,newLogin,newCardNumber,id);
+    public List<User> findUsersByRole(String role) throws DaoException {
+        return executeQuery(FIND_USERS_BY_ROLE, role);
+    }
+
+  /*  public void updateUserNameLoginCardNumber(int id, String newName, String newLogin, String newCardNumber) throws DaoException {
+        executeUpdate(UPDATE_NAME_LOGIN_QUERY, newName, newLogin, newCardNumber, id);
     }
 
     @Override
-    public Optional<User> getById(Long id) {
-        return Optional.empty();
-        //TODO
-    }
+    public void updateUserLoyality(int id, int loyality) throws DaoException {
+        executeUpdate(UPDATE_LOYALITY,loyality,id);
+    }*/
 
-    @Override
+
+   /* @Override
+    public void save(User item) {
+
+    }*/
+
+    /*@Override
     public void removeById(Long id) {
-        //TODO
-    }
+
+    }*/
 }
 

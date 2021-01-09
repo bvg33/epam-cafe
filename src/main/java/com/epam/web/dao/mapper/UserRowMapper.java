@@ -16,9 +16,9 @@ public class UserRowMapper implements RowMapper<User> {
             String password=resultSet.getString("password");
             String name=resultSet.getString("name");
             String cardNumber=resultSet.getString("cardnumber");
-            int loyality=resultSet.getInt("loyality");
+            int loyality=resultSet.getInt("points");
             int id=resultSet.getInt("id");
-            String roleString=resultSet.getString("role_value");
+            String roleString=resultSet.getString("role");
             Role role=Role.valueOf(roleString.toUpperCase());
             user=new User(id,login,password,name,cardNumber,loyality,role);
         } catch (SQLException e) {

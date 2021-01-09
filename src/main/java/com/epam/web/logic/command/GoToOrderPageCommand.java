@@ -3,6 +3,7 @@ package com.epam.web.logic.command;
 import com.epam.web.context.RequestContext;
 import com.epam.web.context.RequestContextHelper;
 import com.epam.web.entity.Menu;
+import com.epam.web.exceptions.DaoException;
 import com.epam.web.logic.service.OrderPageService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +18,7 @@ public class GoToOrderPageCommand implements Command{
     }
 
     @Override
-    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) {
+    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws DaoException {
         List<Menu>menuList=service.getMenuFromBd();
         RequestContext context=helper.createContext();
         context.addSessionAttribute("menuList",menuList);

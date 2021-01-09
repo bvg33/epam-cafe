@@ -1,16 +1,15 @@
 package com.epam.web.logic.command;
 
 import com.epam.web.context.RequestContextHelper;
-import com.epam.web.logic.service.AuthenticationService;
+import com.epam.web.logic.service.LoginCheckService;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class AuthenticationCommand implements Command {
-    private final AuthenticationService service;
+public class LoginCheckCommand implements Command {
+    private final LoginCheckService service;
     private static final String MAIN_PAGE_PATH="WEB-INF/view/order.jsp";
     private static final String LOGIN_PAGE_PATH="WEB-INF/view/login.jsp";
-    public AuthenticationCommand(AuthenticationService service) {
+    public LoginCheckCommand(LoginCheckService service) {
         this.service = service;
     }
 

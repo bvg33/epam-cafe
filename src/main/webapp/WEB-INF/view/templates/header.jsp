@@ -89,16 +89,16 @@
         <fmt:setBundle basename="localization.local" var="loc"/>
         <c:if test="${sessionScope.user!=null}">
             <form>
-                <button type="submit" class="profile" name="command" value="goToProfilePage">
+                <button type="submit"  class="profile" name="command" value="goToRolePage">
                         ${sessionScope.user.role}
                 </button>
             </form>
+            <form action=${pageContext.request.contextPath}/controller>
+                <button type="submit" class="logout" name="command" value="logout">
+                    <fmt:message bundle="${loc}" key="locale.logOutButton"/>
+                </button>
+            </form>
         </c:if>
-        <form action=${pageContext.request.contextPath}/controller>
-            <button type="submit" class="logout" name="command" value="logout">
-                <fmt:message bundle="${loc}" key="locale.logOutButton"/>
-            </button>
-        </form>
     </div>
     <script src="${pageContext.request.contextPath}/static/js/HeaderButtons.js"></script>
 </div>

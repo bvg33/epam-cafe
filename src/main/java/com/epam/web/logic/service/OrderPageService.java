@@ -5,6 +5,7 @@ import com.epam.web.dao.helper.DaoHelperFactory;
 import com.epam.web.dao.menudao.MenuDaoImpl;
 import com.epam.web.dao.userdao.UserDao;
 import com.epam.web.entity.Menu;
+import com.epam.web.exceptions.DaoException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,13 +17,11 @@ public class OrderPageService {
         this.daoHelperFactory = daoHelperFactory;
     }
 
-    public List<Menu> getMenuFromBd() {
+    public List<Menu> getMenuFromBd() throws DaoException {
         List<Menu> result = new ArrayList<>();
         try (DaoHelper daoHelper = daoHelperFactory.createDaoHelper()) {
             MenuDaoImpl dao = daoHelper.createMenuDao();
-            result = dao.getAll(Menu.TABLE);
-        } catch (Exception e) {
-            //todo log
+            result = dao.getAll();
         }
         return result;
     }

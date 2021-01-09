@@ -21,10 +21,6 @@
     margin-top: 10px;
     font-size: 25px;
 }
-.eye-button{
-    border: none;
-    background: none;
-}
 .make-changes{
     background-color: #316dba;
     color: white;
@@ -33,4 +29,8 @@
     border: none;
     cursor: pointer;
     width: 300px;
+}
+.error{
+    color: red;
+    padding-left: 55%;
 }

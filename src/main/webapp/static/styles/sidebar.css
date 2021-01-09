@@ -5,10 +5,10 @@
     background-color: #02d5f8;
     height: 98%;
 }
-.sideButton{
-    margin-left: 50px;
-    margin-top: 80px;
-    width: 200px;
+.sideButton,.adminSideButton{
+    margin-left: 30px;
+    margin-top: 40px;
+    width: 240px;
     height: 90px;
     font-size: 30px;
     color: #f1f1f1;

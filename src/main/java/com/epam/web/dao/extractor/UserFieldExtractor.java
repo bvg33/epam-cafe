@@ -1,4 +1,4 @@
-package com.epam.web.dao.parser;
+package com.epam.web.dao.extractor;
 
 import com.epam.web.entity.Role;
 import com.epam.web.entity.User;
@@ -26,7 +26,7 @@ public class UserFieldExtractor implements EntityFieldExtractor<User> {
         map.put("name",name);
         map.put("cardNumber",cardNumber);
         map.put("id",stringId);
-        map.put("loyality",stringLoyality);
+        map.put("points",stringLoyality);
         map.put("role",stringRole);
         return map;
     }

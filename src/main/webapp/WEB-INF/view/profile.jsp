@@ -19,7 +19,7 @@
 <jsp:include page="templates/header.jsp"/>
 <div class="workplace">
     <c:if test="${sessionScope.user!=null}">
-        <form name="updateUserInfo" action=${pageContext.request.contextPath}/controller method="get">
+        <form name="updateUserInfo" action=${pageContext.request.contextPath}/controller method="post">
             <div class="profile-info">
                 <div class="info">
                     <label> <fmt:message bundle="${loc}" key="locale.login"/></label>
@@ -49,6 +49,16 @@
                 <input type="hidden" name="command" value="updateUserInfo"/>
             </div>
         </form>
+    </c:if>
+    <c:if test="${error=='WRONG_LOGIN'}">
+        <div class="error">
+            <fmt:message bundle="${loc}" key="locale.userUpdateError"/>
+        </div>
+    </c:if>
+    <c:if test="${error=='NOT_VALID_DATA'}">
+        <div class="error">
+            <fmt:message bundle="${loc}" key="locale.notValidData"/>
+        </div>
     </c:if>
 </div>
 <jsp:include page="templates/sidebar.jsp"/>

@@ -1,11 +1,16 @@
 package com.epam.web;
-
+import com.epam.web.connection.ConnectionFactory;
 import com.epam.web.connection.ConnectionPool;
 import com.epam.web.context.RequestContextHelper;
 import com.epam.web.exceptions.ConnectionException;
+import com.epam.web.exceptions.DaoException;
+import com.epam.web.exceptions.NoRootsException;
+import com.epam.web.exceptions.ServiceException;
 import com.epam.web.logic.command.Command;
 import com.epam.web.logic.command.CommandFactory;
 import com.epam.web.logic.command.CommandResult;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,44 +19,56 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class Servlet extends HttpServlet {
-    //TODO при кэтче ошибки слать ее юзеру
+    //todo спросить про констрейнты и логи
+    //todo не удалять блюда а ввести в бд поле булевое
+    //todo пользовательский тэг
     private static final String COMMAND = "command";
-    private static final String PATH = "/epam_cafe_war_exploded/controller?";
+    private static final String PATH = "/epam_cafe_war_exploded/controller?"; //todo for idea
+    //private static final String PATH = "/web/controller?"; //todo for tomcat
+    private static final Logger LOGGER=Logger.getLogger(Servlet.class);
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
-        process(req, resp);
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        BasicConfigurator.configure();
+        try {
+            process(req, resp);
+        } catch (DaoException | ServiceException e) {
+            LOGGER.info(e.getMessage());
+            throw new ServletException(e.getMessage(),e);
+        }
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-        process(req, resp);
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        BasicConfigurator.configure();
+        try {
+            process(req, resp);
+        } catch (DaoException | ServiceException e) {
+            LOGGER.info(e.getMessage());
+            throw new ServletException(e.getMessage(),e);
+        }
+
     }
+
     @Override
     public void destroy() {
         try {
             ConnectionPool.getInstance().destroy();
             super.destroy();
         } catch (ConnectionException e) {
-            e.printStackTrace();
+            LOGGER.info(e.getMessage(),e);
         }
     }
 
-    private void process(HttpServletRequest req, HttpServletResponse resp) {
-        try {
-            String commandParameter = req.getParameter(COMMAND);
-            Command command = CommandFactory.createCommand(commandParameter);
-            RequestContextHelper contextHelper=new RequestContextHelper(req);
-            CommandResult result = command.execute(contextHelper, resp);
-            dispatch(result, req, resp);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void process(HttpServletRequest req, HttpServletResponse resp) throws DaoException, ServletException, IOException, ServiceException {
+        String commandParameter = req.getParameter(COMMAND);
+        Command command = CommandFactory.createCommand(commandParameter);
+        RequestContextHelper contextHelper = new RequestContextHelper(req);
+        CommandResult result = command.execute(contextHelper, resp);
+        dispatch(result, req, resp);
     }
 
     private void dispatch(CommandResult result, HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setHeader("Cache-Control", "private, no-store, no-cache, must-revalidate");
-        resp.setHeader("Pragma", "no-cache");
         if (result.isRedirect()) {
             resp.sendRedirect(PATH + result.getPage());
         } else {

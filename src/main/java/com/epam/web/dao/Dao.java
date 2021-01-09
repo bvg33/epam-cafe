@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface Dao <T>{
-    Optional<T> getById(Long id);
-    List<T> getAll(String tableName) throws DaoException;
-    void save(T item) throws SQLException, DaoException;
-    void removeById(Long id);
+    Optional<T> getById(int id) throws DaoException;
+    List<T> getAll() throws DaoException;
+    void save(T item) throws  DaoException;
+    void removeById(Long id) throws DaoException;
 }

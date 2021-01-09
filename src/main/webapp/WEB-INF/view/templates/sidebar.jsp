@@ -26,8 +26,13 @@
         </button>
     </form>
     <form>
-        <button type="submit" class="sideButton" name="command" value="goToEvaluatePage">
-            <fmt:message bundle="${loc}" key="locale.evaluateOrder"/>
+        <button type="submit" class="sideButton" name="command" value="goToMyOrdersPage">
+            <fmt:message bundle="${loc}" key="locale.myOrders"/>
+        </button>
+    </form>
+    <form>
+        <button type="submit" class="sideButton" name="command" value="goToBucket">
+            <fmt:message bundle="${loc}" key="locale.bucket"/>
         </button>
     </form>
 </div>

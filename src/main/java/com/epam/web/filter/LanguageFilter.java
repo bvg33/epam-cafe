@@ -5,6 +5,7 @@ import com.epam.web.context.RequestContextHelper;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.IOException;
 
 public class LanguageFilter implements Filter {

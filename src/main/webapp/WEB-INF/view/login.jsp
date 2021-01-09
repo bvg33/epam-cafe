@@ -30,14 +30,14 @@
             <div class="login">
                 <label><b><fmt:message bundle="${loc}" key="locale.login"/></b></label>
                 <fmt:message bundle="${loc}" key="locale.loginPlaceholder" var="logPlch"/>
-                <input type="text" class="input-field" placeholder="${logPlch}" name="login">
+                <input required="true" type="text" class="input-field" placeholder="${logPlch}" name="login">
             </div>
 
             <div class="password">
                 <label><b><fmt:message bundle="${loc}" key="locale.password"/></b></label>
                 <fmt:message bundle="${loc}" key="locale.passwordPlaceholder" var="pswPlch"/>
                 <div>
-                    <input type="password" class="input-field" placeholder="${pswPlch}" name="password"/>
+                    <input required="true" type="password" class="input-field" placeholder="${pswPlch}" name="password"/>
                     <button class="eye-button" type="button"><img
                             src="${pageContext.request.contextPath}/static/images/eye.png"
                             width="35" height="27"></button>
@@ -54,6 +54,6 @@
         </c:if>
     </div>
 </div>
-<script src="${pageContext.request.contextPath}/static/js/HidePassword.js"></script>
+<script src="${pageContext.request.contextPath}/static/js/LoginPage.js"></script>
 </body>
 </html>
