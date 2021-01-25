@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib prefix="ctg" uri="/WEB-INF/custom.tld" %>
 <html>
 <head>
     <title>My Orders</title>
@@ -23,33 +24,61 @@
             <div class="page-info">
                 <table id="table">
                     <tr>
-                        <th><fmt:message bundle="${loc}" key="locale.orderNumber"/></th>
-                        <th><fmt:message bundle="${loc}" key="locale.dishes"/> BYN</th>
+                        <th><fmt:message bundle="${loc}" key="locale.dishes"/></th>
                         <th><fmt:message bundle="${loc}" key="locale.tableColoumnPrice"/></th>
                         <th><fmt:message bundle="${loc}" key="locale.issueTime"/></th>
                         <th><fmt:message bundle="${loc}" key="locale.state"/></th>
+                        <th><fmt:message bundle="${loc}" key="locale.rating"/></th>
+                        <th><fmt:message bundle="${loc}" key="locale.evaluateOrder"/></th>
                     </tr>
                     <c:forEach var="dish" items="${orders}">
                         <tr>
-                            <td>"${dish.getOrder_id()}"</td>
-                            <td>"${dish.getDishes()}"</td>
-                            <td>"${dish.getPrice()} BYN"</td>
-                            <td>"${dish.getTime()}"</td>
-                            <td>"${dish.getState()}"</td>
+                            <td>${dish.getDishes()}</td>
+                            <td>${dish.getPrice()} BYN</td>
                             <td>
-                                <div class="rating-area">
-                                    <input type="radio" id="star-5" name="rating" value="5">
-                                    <label for="star-5" title="Оценка «5»"></label>
-                                    <input type="radio" id="star-4" name="rating" value="4">
-                                    <label for="star-4" title="Оценка «4»"></label>
-                                    <input type="radio" id="star-3" name="rating" value="3">
-                                    <label for="star-3" title="Оценка «3»"></label>
-                                    <input type="radio" id="star-2" name="rating" value="2">
-                                    <label for="star-2" title="Оценка «2»"></label>
-                                    <input type="radio" id="star-1" name="rating" value="1">
-                                    <label for="star-1" title="Оценка «1»"></label>
-                                </div>
+                                <ctg:date date="${dish.getTime()}"/>
                             </td>
+                            <td>
+                                <c:choose>
+                                    <c:when test="${sessionScope.local=='en'}">
+                                        ${dish.getState().getEng()}
+                                    </c:when>
+                                    <c:when test="${sessionScope.local=='ru'}">
+                                        ${dish.getState().getRu()}
+                                    </c:when>
+                                    <c:when test="${sessionScope.local=='by'}">
+                                        ${dish.getState().getBy()}
+                                    </c:when>
+                                </c:choose>
+                            </td>
+                            <c:if test="${dish.getRating()==0}">
+                                <form method="post"
+                                      action="${pageContext.request.contextPath}/controller?command=evaluateOrder">
+                                    <td>
+                                        <div class="rating-area">
+                                            <input type="radio" class="rating" id="star-1" name="rating" value="1">
+                                            <label class="stars-label" for="star-5" title="Оценка «1»">1</label>
+                                            <input type="radio" class="rating" id="star-2" name="rating" value="2">
+                                            <label class="stars-label"  for="star-4" title="Оценка «2»">2</label>
+                                            <input type="radio" class="rating" id="star-3" name="rating" value="3">
+                                            <label class="stars-label"  for="star-3" title="Оценка «3»">3</label>
+                                            <input type="radio" class="rating" id="star-4" name="rating" value="4">
+                                            <label class="stars-label"  for="star-2" title="Оценка «4»">4</label>
+                                            <input type="radio" class="rating" id="star-5" name="rating" value="5">
+                                            <label class="stars-label"  for="star-1" title="Оценка «5»">5</label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button class="apply-button" type="submit"><fmt:message bundle="${loc}" key="locale.evaluateOrder"/></button>
+                                    </td>
+                                    <input type="hidden" name="orderId" value="${dish.getId()}">
+                                </form>
+                            </c:if>
+                            <c:if test="${dish.getRating()!=0}">
+                                <td class="order-rating-td"></td>
+                                <input type="hidden" class="order-rating" name="rating" value="${dish.getRating()}">
+                                <td><fmt:message bundle="${loc}" key="locale.alreadyEvaluated"/></td>
+                            </c:if>
                         </tr>
                     </c:forEach>
                 </table>
@@ -58,5 +87,6 @@
     </div>
 </div>
 <jsp:include page="templates/sidebar.jsp"/>
+<script src="${pageContext.request.contextPath}/static/js/StarsDrowing.js"></script>
 </body>
 </html>

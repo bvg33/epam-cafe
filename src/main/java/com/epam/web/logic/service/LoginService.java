@@ -6,6 +6,7 @@ import com.epam.web.dao.userdao.UserDao;
 import com.epam.web.entity.User;
 import com.epam.web.exceptions.DaoException;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public class LoginService {
@@ -20,5 +21,18 @@ public class LoginService {
             UserDao dao=daoHelper.createUserDao();
             return dao.findUserByLoginAndPassword(login, password);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LoginService that = (LoginService) o;
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(daoHelperFactory);
     }
 }

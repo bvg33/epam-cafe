@@ -9,6 +9,7 @@ import com.epam.web.logic.service.RemoveFromMenuService;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 
 public class RemoveFromMenuCommand implements Command{
     private final RemoveFromMenuService service;
@@ -24,5 +25,18 @@ public class RemoveFromMenuCommand implements Command{
         int id=Integer.parseInt(dishId);
         service.removeDish(id);
         return CommandResult.redirect(PAGE);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RemoveFromMenuCommand that = (RemoveFromMenuCommand) o;
+        return Objects.equals(service, that.service);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(service);
     }
 }

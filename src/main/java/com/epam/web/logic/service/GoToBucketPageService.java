@@ -1,40 +1,52 @@
 package com.epam.web.logic.service;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class GoToBucketPageService {
     private static final int TIME_TO_MAKE_ORDER=50;
-    public Map<String, String> getTime() {
-        Calendar calendar = new GregorianCalendar();
-        int hours = calendar.get(Calendar.HOUR_OF_DAY);
-        int minutes = calendar.get(Calendar.MINUTE);
-        if (hours > 17 || hours < 11) {
-            hours = 11;
-            minutes = 0;
-        }
-        String minutesString=null;
-        if(minutes<10){
-            minutesString="0"+String.valueOf(minutes);
-        }
+    public Map<String, String> getTime(Calendar calendar) {
+        String minDate=createTimeDate(calendar,1);
+        String maxDate=createTimeDate(calendar,2);
+        Map<String,String> result=new HashMap<>();
+        result.put("minDate",minDate);
+        result.put("maxDate",maxDate);
+        return result;
+    }
+
+    private String createTimeDate(Calendar calendar,int monthDifference){
         calendar.add(Calendar.MINUTE,TIME_TO_MAKE_ORDER);
         int minHours=calendar.get(Calendar.HOUR_OF_DAY);
         int minMinutes=calendar.get(Calendar.MINUTE);
-        if(minHours>17 || minHours<11){
-            minHours=11;
-            minMinutes=0;
+        String minHoursString=String.valueOf(minHours);
+        String minMinutesString=String.valueOf(minMinutes);
+        if(minHours<10){
+            minHoursString="0"+minHoursString;
         }
-        String minMinutesString=null;
         if(minMinutes<10){
-            minMinutesString="0"+String.valueOf(minMinutes);
+            minMinutesString="0"+minMinutesString;
         }
-        Map<String,String> result=new HashMap<>();
-        result.put("hours",String.valueOf(hours));
-        result.put("minutes",minutesString);
-        result.put("minHours",String.valueOf(minHours));
-        result.put("minMinutes",minMinutesString);
-        return result;
+        return createDate(calendar,monthDifference)+"T"+minHoursString+":"+minMinutesString;
     }
+
+    private String createDate(Calendar calendar,int monthDifference){
+        int year=calendar.get(Calendar.YEAR);
+        int month=calendar.get(Calendar.MONTH)+monthDifference;
+        int chislo=calendar.get(Calendar.DAY_OF_MONTH);
+        String stringMonth=String.valueOf(month),stringChislo=String.valueOf(chislo);
+        if(month<10){
+            stringMonth="0"+stringMonth;
+        }
+        if(chislo<10){
+            stringChislo="0"+stringChislo;
+        }
+        return String.valueOf(year)+"-"+stringMonth+"-"+stringChislo;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        return true;
+    }
+
 }

@@ -8,6 +8,7 @@ import com.epam.web.logic.service.GoToAdminPageService;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Objects;
 
 public class GoToAdminPageCommand implements Command {
     private final GoToAdminPageService service;
@@ -24,5 +25,18 @@ public class GoToAdminPageCommand implements Command {
         context.addRequestAttribute("users", users);
         helper.updateRequest(context);
         return CommandResult.forward(ADMIN_PAGE);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GoToAdminPageCommand that = (GoToAdminPageCommand) o;
+        return Objects.equals(service, that.service);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(service);
     }
 }

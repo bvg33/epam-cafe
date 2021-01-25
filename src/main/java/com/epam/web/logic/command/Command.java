@@ -11,5 +11,16 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public interface Command {
+    /**
+     *
+     * method to execute query
+     * @param helper Class to create RequestContext
+     * @param response HttpServletResponse
+     * @return CommandResult Class to do forward or redirect
+     * @throws DaoException
+     * @throws IOException
+     * @throws ServletException
+     * @throws ServiceException
+     */
     CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws DaoException, IOException, ServletException, ServiceException;
 }

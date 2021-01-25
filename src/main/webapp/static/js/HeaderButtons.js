@@ -5,6 +5,10 @@ LOGOUT.onclick=function (){
     sessionStorage.removeItem("BTN_1Color");
     sessionStorage.removeItem("BTN_0Color");
     sessionStorage.removeItem("BTN_3Color");
+    sessionStorage.removeItem("ADMIN_BTN_0Color");
+    sessionStorage.removeItem("ADMIN_BTN_1Color");
+    sessionStorage.removeItem("ADMIN_BTN_2Color");
+    sessionStorage.removeItem("ADMIN_BTN_3Color");
 
 }
 PROFILE.onclick=function (){

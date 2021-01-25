@@ -20,8 +20,7 @@ public class ConnectionPool {
         availableConnections = new ArrayDeque<>(POOL_SIZE);
         connectionsInUse = new ArrayDeque<>(POOL_SIZE);
         for (int i = 0; i < POOL_SIZE; i++) {
-            ProxyConnection connection = null;
-            connection = ConnectionFactory.createConnection();
+            ProxyConnection connection = ConnectionFactory.createConnection();
             availableConnections.offer(connection);
         }
     }

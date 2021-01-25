@@ -8,21 +8,21 @@ import java.io.Serializable;
 public class Menu implements Identifiable, Serializable {
     public static final String TABLE="menu";
     private int id;
-    private String description;
     private String name;
     private String price;
     private String photo;
+    private int isActive;
 
-    public Menu(int id,String name, String description, String price, String photo) {
+    public Menu(int id,String name,String price, String photo,int isActive) {
         this.id = id;
-        this.description = description;
         this.name = name;
         this.price = price;
         this.photo = photo;
+        this.isActive=isActive;
     }
 
-    public String getDescription() {
-        return description;
+    public int getIsActive() {
+        return isActive;
     }
 
     public String getName() {

@@ -4,9 +4,9 @@ import com.epam.web.entity.Bucket;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class BucketFieldExtractor implements EntityFieldExtractor<Bucket> {
-
     @Override
     public Map<String, String> parse(Bucket entity) {
         int dishId=entity.getDishId();
@@ -23,5 +23,12 @@ public class BucketFieldExtractor implements EntityFieldExtractor<Bucket> {
         map.put("order_id",stringOrderNumber);
         map.put("count",stringCount);
         return map;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        return true;
     }
 }

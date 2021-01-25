@@ -1,10 +1,7 @@
 package com.epam.web.dao.extractor;
 
 import com.epam.web.dto.OrderDto;
-import com.epam.web.entity.Bucket;
-import com.epam.web.entity.Menu;
-import com.epam.web.entity.Order;
-import com.epam.web.entity.User;
+import com.epam.web.entity.*;
 
 public class FieldExtractorFactory {
     public static EntityFieldExtractor createFieldExtractor(String tableName) {
@@ -17,8 +14,8 @@ public class FieldExtractorFactory {
                 return new OrderFieldExtractor();
             case Bucket.TABLE:
                 return new BucketFieldExtractor();
-            case OrderDto.TABLE:
-                return new OrderDtoFieldExtractor();
+            case Rating.TABLE:
+                return new RatingFieldExtractor();
             default:
                 throw new IllegalArgumentException("Unknown table " + tableName);
         }

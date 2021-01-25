@@ -9,6 +9,7 @@ import com.epam.web.logic.service.RemoveFromBucketService;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class RemoveFromBucketCommand implements Command {
     private static final String PAGE="WEB-INF/view/bucket.jsp";
@@ -26,5 +27,18 @@ public class RemoveFromBucketCommand implements Command {
         ArrayList<MenuDto> bucket = (ArrayList<MenuDto>) context.getSessionAttribute("bucket");
         service.remove(bucket,intId);
         return CommandResult.forward(PAGE);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RemoveFromBucketCommand that = (RemoveFromBucketCommand) o;
+        return Objects.equals(service, that.service);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(service);
     }
 }

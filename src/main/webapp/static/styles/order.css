@@ -3,30 +3,101 @@
     width: 100%;
     height: 100%;
 }
-.page-info{
-    padding-left: 25%;
-    padding-top:20px;
-}
-#table td{
-    padding: 37px;
-    border: 1px solid #316dba;
-}
-#pagination {
-    display: flex;
-    padding-left: 25%;
-    list-style-type: none;
-}
-#pagination li{
-    margin-right: 5px;
-    padding: 10px;
-    border: 1px solid #316dba;
-}
 #pagination li:hover,#pagination li.active{
     cursor: pointer;
     color: red;
     border: 1px solid red;
 }
-.text{
-    font-size: 20px;
-    font-style: italic;
+@media all and (max-width: 1920px) {
+    .page-info {
+        padding-left: 25%;
+        padding-top: 20px;
+    }
+
+    #table td {
+        padding-left: 150px;
+        padding-top: 30px;
+    }
+
+    #table th {
+        padding-left: 150px;
+    }
+
+    #pagination {
+        display: flex;
+        padding-left: 40%;
+        list-style-type: none;
+    }
+
+    #pagination li {
+        margin-right: 3px;
+        padding: 10px;
+        border: 1px solid #316dba;
+    }
+    .text{
+        font-size: 23px;
+        font-style: italic;
+    }
+}
+@media all and (max-width: 1300px) {
+    .page-info {
+        padding-left: 20%;
+        padding-top: 20px;
+    }
+
+    #table td {
+        padding-left: 130px;
+        padding-top: 30px;
+    }
+
+    #table th {
+        padding-left: 130px;
+    }
+
+    #pagination {
+        display: flex;
+        padding-left: 40%;
+        list-style-type: none;
+    }
+
+    #pagination li {
+        margin-right: 3px;
+        padding: 10px;
+        border: 1px solid #316dba;
+    }
+    .text{
+        font-size: 23px;
+        font-style: italic;
+    }
+}
+@media all and (max-width: 1100px) {
+    .page-info {
+        padding-left: 15%;
+        padding-top: 20px;
+    }
+
+    #table td {
+        padding-left: 100px;
+        padding-top: 30px;
+    }
+
+    #table th {
+        padding-left: 100px;
+    }
+
+    #pagination {
+        display: flex;
+        padding-left: 40%;
+        list-style-type: none;
+    }
+
+    #pagination li {
+        margin-right: 3px;
+        padding: 10px;
+        border: 1px solid #316dba;
+    }
+    .text{
+        font-size: 23px;
+        font-style: italic;
+    }
 }

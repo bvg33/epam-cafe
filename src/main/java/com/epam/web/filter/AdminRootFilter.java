@@ -11,7 +11,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-public class RootFilter implements Filter {
+public class AdminRootFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 

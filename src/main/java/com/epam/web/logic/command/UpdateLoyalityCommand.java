@@ -9,6 +9,7 @@ import com.epam.web.logic.service.UpdateLoyalityService;
 
 import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Objects;
 
 public class UpdateLoyalityCommand implements Command {
     private final UpdateLoyalityService service;
@@ -40,5 +41,18 @@ public class UpdateLoyalityCommand implements Command {
         String name=user.getName();
         String password=user.getPassword();
         return new User(id,login,password,name,cardNumber,loyality,role);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UpdateLoyalityCommand that = (UpdateLoyalityCommand) o;
+        return Objects.equals(service, that.service);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(service);
     }
 }

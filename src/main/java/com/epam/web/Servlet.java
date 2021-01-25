@@ -1,10 +1,9 @@
 package com.epam.web;
-import com.epam.web.connection.ConnectionFactory;
+
 import com.epam.web.connection.ConnectionPool;
 import com.epam.web.context.RequestContextHelper;
 import com.epam.web.exceptions.ConnectionException;
 import com.epam.web.exceptions.DaoException;
-import com.epam.web.exceptions.NoRootsException;
 import com.epam.web.exceptions.ServiceException;
 import com.epam.web.logic.command.Command;
 import com.epam.web.logic.command.CommandFactory;
@@ -19,9 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class Servlet extends HttpServlet {
-    //todo спросить про констрейнты и логи
-    //todo не удалять блюда а ввести в бд поле булевое
-    //todo пользовательский тэг
+    //todo спросить про констрейнты и дтодао,спросить про локализацию енамов в заказах
     private static final String COMMAND = "command";
     private static final String PATH = "/epam_cafe_war_exploded/controller?"; //todo for idea
     //private static final String PATH = "/web/controller?"; //todo for tomcat

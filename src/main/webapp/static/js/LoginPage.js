@@ -15,4 +15,10 @@ loginButton.onclick=function () {
     sessionStorage.setItem("BTN_1Color", "#316dba");
     sessionStorage.setItem("BTN_2Color", "#316dba");
     sessionStorage.setItem("BTN_3Color", "#316dba");
+    sessionStorage.setItem("ADMIN_BTN_0Color", "#E76F00");
+    sessionStorage.setItem("ADMIN_BTN_1Color", "#316dba");
+    sessionStorage.setItem("ADMIN_BTN_2Color", "#316dba");
+    sessionStorage.setItem("ADMIN_BTN_3Color", "#316dba");
+    sessionStorage.setItem("ADMIN_BTN_4Color", "#316dba");
+
 }

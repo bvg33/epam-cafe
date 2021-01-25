@@ -6,6 +6,7 @@ import com.epam.web.exceptions.DaoException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class UserRowMapper implements RowMapper<User> {
     @Override
@@ -25,5 +26,12 @@ public class UserRowMapper implements RowMapper<User> {
             throw new DaoException("Result set exception");
         }
         return user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        return true;
     }
 }

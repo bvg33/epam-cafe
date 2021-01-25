@@ -12,6 +12,7 @@ import com.epam.web.logic.service.UpdateOrderStatusService;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 
 public class UpdateOrderStatusCommand implements Command {
     private final UpdateOrderStatusService service;
@@ -23,7 +24,7 @@ public class UpdateOrderStatusCommand implements Command {
     @Override
     public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws DaoException, IOException, ServletException, ServiceException {
         RequestContext context=helper.createContext();
-        String state=context.getRequestParameter("state");
+        String state=context.getRequestParameter("state").toUpperCase();
         String idString=context.getRequestParameter("id");
         int id=Integer.parseInt(idString);
         Order order=service.getCurrentOrder(id);
@@ -40,5 +41,18 @@ public class UpdateOrderStatusCommand implements Command {
         String time=order.getTime();
         int userId=order.getUserId();
         return new Order(id,price,type,stateEnum,time,userId);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UpdateOrderStatusCommand that = (UpdateOrderStatusCommand) o;
+        return Objects.equals(service, that.service);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(service);
     }
 }

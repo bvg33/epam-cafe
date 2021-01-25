@@ -55,9 +55,14 @@
             <fmt:message bundle="${loc}" key="locale.userUpdateError"/>
         </div>
     </c:if>
-    <c:if test="${error=='NOT_VALID_DATA'}">
+    <c:if test="${error=='WRONG_NAME'}">
         <div class="error">
-            <fmt:message bundle="${loc}" key="locale.notValidData"/>
+            <fmt:message bundle="${loc}" key="locale.wrongName"/>
+        </div>
+    </c:if>
+    <c:if test="${error=='WRONG_CARD_NUMBER'}">
+        <div class="error">
+            <fmt:message bundle="${loc}" key="locale.wrongCardNumber"/>
         </div>
     </c:if>
 </div>

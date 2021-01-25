@@ -15,9 +15,7 @@ import java.util.Optional;
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     private static final String FIND_BY_LOGIN_AND_PASSWORD = "select * from " + User.TABLE + " where login=? and password=? and points>0";
     private static final String FIND_BY_LOGIN = "select * from " + User.TABLE + " where login=?";
-   // private static final String UPDATE_NAME_LOGIN_QUERY = "update " + User.TABLE + " set name=?,login=?,cardnumber=? where id=?";
     private static final String FIND_USERS_BY_ROLE = "select * from " + User.TABLE + " where role=?";
-  //  private static final String UPDATE_LOYALITY=  "update " + User.TABLE + " set points=? where id=?";
 
     public UserDaoImpl(ProxyConnection connection) {
         super(connection, RowMapperFactory.createMapper(User.TABLE), FieldExtractorFactory.createFieldExtractor(User.TABLE),User.TABLE);
@@ -37,25 +35,5 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     public List<User> findUsersByRole(String role) throws DaoException {
         return executeQuery(FIND_USERS_BY_ROLE, role);
     }
-
-  /*  public void updateUserNameLoginCardNumber(int id, String newName, String newLogin, String newCardNumber) throws DaoException {
-        executeUpdate(UPDATE_NAME_LOGIN_QUERY, newName, newLogin, newCardNumber, id);
-    }
-
-    @Override
-    public void updateUserLoyality(int id, int loyality) throws DaoException {
-        executeUpdate(UPDATE_LOYALITY,loyality,id);
-    }*/
-
-
-   /* @Override
-    public void save(User item) {
-
-    }*/
-
-    /*@Override
-    public void removeById(Long id) {
-
-    }*/
 }
 

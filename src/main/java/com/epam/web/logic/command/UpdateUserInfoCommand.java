@@ -7,8 +7,12 @@ import com.epam.web.entity.User;
 import com.epam.web.enums.UserInfoResponseEnum;
 import com.epam.web.exceptions.DaoException;
 import com.epam.web.logic.service.UpdateUserInfoService;
+import com.epam.web.logic.validator.CardNumberValidator;
+import com.epam.web.logic.validator.LoginValidator;
+import com.epam.web.logic.validator.UserNameValidator;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Objects;
 
 public class UpdateUserInfoCommand implements Command {
     private UpdateUserInfoService service;
@@ -28,14 +32,22 @@ public class UpdateUserInfoCommand implements Command {
         String newName = context.getRequestParameter("name");
         String newCardNumber = context.getRequestParameter("cardNumber");
         int id = currentUser.getId();
-        UserInfoResponseEnum isUpdatable = service.isUpdatableInfo(newLogin, newName, newCardNumber, id);
+        UserInfoResponseEnum isUpdatable = service.isUpdatableInfo(newLogin, newName, newCardNumber, id,new UserNameValidator(),
+                new LoginValidator(),new CardNumberValidator());
         if (isUpdatable == UserInfoResponseEnum.OK) {
-            User newUserInfo = createUser(id,newLogin,newName,newCardNumber,currentUser);
+            User newUserInfo = createUser(id, newLogin, newName, newCardNumber, currentUser);
             service.updateInfo(newUserInfo);
             return CommandResult.redirect(LOGOUT);
+        } else if (isUpdatable == UserInfoResponseEnum.WRONG_NAME) {
+            context.addRequestAttribute("error", isUpdatable.toString());
+            helper.updateRequest(context);
+        } else if (isUpdatable == UserInfoResponseEnum.WRONG_LOGIN) {
+            context.addRequestAttribute("error", isUpdatable.toString());
+            helper.updateRequest(context);
+        } else if (isUpdatable == UserInfoResponseEnum.WRONG_CARD_NUMBER) {
+            context.addRequestAttribute("error", isUpdatable.toString());
+            helper.updateRequest(context);
         }
-        context.addRequestAttribute("error", isUpdatable.toString());
-        helper.updateRequest(context);
         return CommandResult.forward(CURRENT_PAGE);
     }
 
@@ -44,5 +56,18 @@ public class UpdateUserInfoCommand implements Command {
         int loylity = currentUser.getLoyality();
         Role role = currentUser.getRole();
         return new User(id, newLogin, password, newName, newCardNumber, loylity, role);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UpdateUserInfoCommand that = (UpdateUserInfoCommand) o;
+        return Objects.equals(service, that.service);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(service);
     }
 }

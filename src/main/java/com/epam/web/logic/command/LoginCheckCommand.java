@@ -4,6 +4,7 @@ import com.epam.web.context.RequestContextHelper;
 import com.epam.web.logic.service.LoginCheckService;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Objects;
 
 public class LoginCheckCommand implements Command {
     private final LoginCheckService service;
@@ -20,5 +21,18 @@ public class LoginCheckCommand implements Command {
             return CommandResult.forward(MAIN_PAGE_PATH);
         }
         return CommandResult.forward(LOGIN_PAGE_PATH);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        LoginCheckCommand that = (LoginCheckCommand) o;
+        return Objects.equals(service, that.service);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(service);
     }
 }

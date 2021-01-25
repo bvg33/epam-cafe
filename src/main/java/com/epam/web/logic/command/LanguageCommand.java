@@ -4,6 +4,7 @@ import com.epam.web.context.RequestContext;
 import com.epam.web.context.RequestContextHelper;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Objects;
 
 public class LanguageCommand implements Command {
     @Override
@@ -15,4 +16,12 @@ public class LanguageCommand implements Command {
         helper.updateRequest(requestContext);
         return CommandResult.forward(path);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        return true;
+    }
+
 }

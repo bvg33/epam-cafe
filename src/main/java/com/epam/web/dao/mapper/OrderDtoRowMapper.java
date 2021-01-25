@@ -18,16 +18,17 @@ public class OrderDtoRowMapper implements RowMapper<OrderDto> {
         String stateString=resultSet.getString("state");
         String cashString=resultSet.getString("type");
         String login=resultSet.getString("login");
+        Integer rating=resultSet.getInt("stars");
         OrderTypeEnum cash=OrderTypeEnum.valueOf(cashString.toUpperCase());
         OrderStateEnum state=OrderStateEnum.valueOf(stateString.toUpperCase());
         StringBuilder dish=new StringBuilder(resultSet.getString("name"));
         dish.append(":");
-        dish.append(resultSet.getInt("count")).append(";");
+        dish.append(resultSet.getInt("count")).append(",");
         while(resultSet.next() && resultSet.getInt("order_id")==orderNumber){
             int id=resultSet.getInt("id");
-            dish.append(resultSet.getString("name")).append(":").append(resultSet.getInt("count")).append(";");
+            dish.append(resultSet.getString("name")).append(":").append(resultSet.getInt("count")).append(",");
         }
         resultSet.previous();
-        return new OrderDto(price,state,time,orderNumber,dish.toString(),cash,login);
+        return new OrderDto(orderNumber,price,state,time,dish.toString(),cash,login,rating);
     }
 }

@@ -50,7 +50,10 @@ public class CommandFactory {
                 return new GoToAllOrdersPageCommand(new GoToAllOrdersPageService(new DaoHelperFactory()));
             case "updateOrderStatus":
                 return new UpdateOrderStatusCommand(new UpdateOrderStatusService(new DaoHelperFactory()));
-
+            case "goToPickedOrders":
+                return new GoToPickedOrdersCommand(new GoToPickedOrdersService(new DaoHelperFactory()));
+            case "evaluateOrder":
+                return new EvaluateOrderCommand(new EvaluateOrderService(new DaoHelperFactory()));
             default:
                 throw new IllegalArgumentException("Illegal string");
         }

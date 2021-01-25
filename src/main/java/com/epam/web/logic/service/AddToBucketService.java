@@ -1,5 +1,6 @@
 package com.epam.web.logic.service;
 
+import com.epam.web.dao.Dao;
 import com.epam.web.dao.converter.Converter;
 import com.epam.web.dao.converter.MenuConverter;
 import com.epam.web.dao.helper.DaoHelper;
@@ -11,6 +12,7 @@ import com.epam.web.exceptions.DaoException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class AddToBucketService {
@@ -20,12 +22,11 @@ public class AddToBucketService {
         this.daoHelperFactory = daoHelperFactory;
     }
 
-    public MenuDto createMenuDto(int id) throws DaoException {
+    public MenuDto createMenuDto(int id,Converter converter) throws DaoException {
         try (DaoHelper daoHelper=daoHelperFactory.createDaoHelper()) {
-            MenuDaoImpl dao=daoHelper.createMenuDao();
+            Dao dao=daoHelper.createMenuDao();
             Optional<Menu> menuOptional=dao.getById(id);
             Menu menu=menuOptional.get();
-            Converter converter=new MenuConverter();
             return (MenuDto) converter.convert(menu);
         }
     }
@@ -38,5 +39,17 @@ public class AddToBucketService {
         int index=bucket.indexOf(menuDto);
         menuDto=bucket.get(index);
         menuDto.incrementCount();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(daoHelperFactory);
     }
 }

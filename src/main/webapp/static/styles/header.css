@@ -3,7 +3,8 @@
     height: 100px;
     width: 100%;
 }
-.header-text{
+
+.header-text {
     margin-top: 10px;
     margin-left: 25%;
     font-size: 80px;
@@ -16,21 +17,7 @@
     margin-left: 60%;
 }
 
-.top-tools{
-    margin-top: -87px;
-    margin-left: 75%;
-}
-.dropbtn {
-    background: #E76F00;
-    color: white;
-    padding: 10px;
-    font-size: 16px;
-    border: none;
-    width: 100px;
-    float: left;
-    margin-right: 13px;
-}
-.logout{
+.logout {
     color: white;
     background: #E76F00;
     padding: 10px;
@@ -39,7 +26,8 @@
     width: 100px;
     float: left;
 }
-.profile{
+
+.profile {
     color: white;
     background: #E76F00;
     padding: 10px;
@@ -76,4 +64,38 @@
 
 .dropdown:hover .dropbtn {
     background-color: #b1339b;
+}
+
+.dropbtn {
+    background: #E76F00;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    width: 100px;
+    float: left;
+    margin-right: 13px;
+}
+
+
+@media all and (max-width: 1920px) {
+    .header-image {
+        margin-top: -87px;
+        margin-left: 60%;
+    }
+    .top-tools {
+        margin-top: -87px;
+        margin-left: 75%;
+    }
+}
+
+@media all and (max-width: 1320px) {
+    .header-image {
+        visibility: hidden;
+    }
+
+    .top-tools {
+        margin-top: -87px;
+        margin-left: 65%;
+    }
 }

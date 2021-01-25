@@ -8,6 +8,7 @@ import com.epam.web.entity.User;
 import com.epam.web.exceptions.DaoException;
 
 import java.util.List;
+import java.util.Objects;
 
 public class GoToAdminPageService {
     private DaoHelperFactory daoHelperFactory;
@@ -22,7 +23,16 @@ public class GoToAdminPageService {
             return dao.findUsersByRole("user");
         }
     }
-    public boolean hasRoots(User user){
-        return user.getRole()== Role.ADMIN;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(daoHelperFactory);
     }
 }

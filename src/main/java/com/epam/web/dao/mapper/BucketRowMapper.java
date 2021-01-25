@@ -5,9 +5,9 @@ import com.epam.web.exceptions.DaoException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 
 public class BucketRowMapper implements RowMapper<Bucket> {
-
     @Override
     public Bucket map(ResultSet resultSet) throws DaoException {
         Bucket bucket=null;
@@ -21,5 +21,12 @@ public class BucketRowMapper implements RowMapper<Bucket> {
             throw new DaoException(e.getMessage(),e);
         }
         return bucket;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        return true;
     }
 }

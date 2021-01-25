@@ -12,6 +12,7 @@ import com.epam.web.logic.validator.LoginValidator;
 import com.epam.web.logic.validator.UserNameValidator;
 
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.Optional;
 
 public class UpdateUserInfoService {
@@ -21,29 +22,42 @@ public class UpdateUserInfoService {
         this.daoHelperFactory = daoHelperFactory;
     }
 
-    public UserInfoResponseEnum isUpdatableInfo(String newLogin, String newName, String newCardNumber, int id) throws DaoException {
-        UserInfoResponseEnum result =null;
-        try (DaoHelper daoHelper=daoHelperFactory.createDaoHelper()) {
-            UserDao dao=daoHelper.createUserDao();
-            Optional<User>userResult=dao.findUserByLogin(newLogin);
-            AbstractValidator userNameValidator=new UserNameValidator();
-            AbstractValidator loginValidator=new LoginValidator();
-            AbstractValidator cardNumberValidator=new CardNumberValidator();
-            if(userResult.isPresent()&& userResult.get().getId()!=id){
-                result= UserInfoResponseEnum.WRONG_LOGIN;
-            } else if(userNameValidator.isValid(newName) && loginValidator.isValid(newLogin)
-            && cardNumberValidator.isValid(newCardNumber)){
-                result= UserInfoResponseEnum.OK;
+    public UserInfoResponseEnum isUpdatableInfo(String newLogin, String newName, String newCardNumber, int id,
+                                                UserNameValidator userNameValidator,LoginValidator loginValidator,
+                                                CardNumberValidator cardNumberValidator) throws DaoException {
+        UserInfoResponseEnum result = null;
+        try (DaoHelper daoHelper = daoHelperFactory.createDaoHelper()) {
+            UserDao dao = daoHelper.createUserDao();
+            Optional<User> userResult = dao.findUserByLogin(newLogin);
+            if ((userResult.isPresent() && userResult.get().getId() != id) || !loginValidator.isValid(newLogin)) {
+                result = UserInfoResponseEnum.WRONG_LOGIN;
+            } else if (!userNameValidator.isValid(newName)) {
+                result = UserInfoResponseEnum.WRONG_NAME;
+            } else if (!cardNumberValidator.isValid(newCardNumber)) {
+                result = UserInfoResponseEnum.WRONG_CARD_NUMBER;
             } else {
-                result = UserInfoResponseEnum.NOT_VALID_DATA;
+                result = UserInfoResponseEnum.OK;
             }
         }
         return result;
     }
+
     public void updateInfo(User newUserInfo) throws DaoException {
-        try (DaoHelper daoHelper=daoHelperFactory.createDaoHelper()) {
+        try (DaoHelper daoHelper = daoHelperFactory.createDaoHelper()) {
             UserDao dao = daoHelper.createUserDao();
             dao.save(newUserInfo);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(daoHelperFactory);
     }
 }

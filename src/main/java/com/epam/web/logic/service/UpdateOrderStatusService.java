@@ -7,6 +7,7 @@ import com.epam.web.dao.userdao.UserDao;
 import com.epam.web.entity.Order;
 import com.epam.web.exceptions.DaoException;
 
+import java.util.Objects;
 import java.util.Optional;
 
 public class UpdateOrderStatusService {
@@ -29,5 +30,17 @@ public class UpdateOrderStatusService {
             OrderDao dao=daoHelper.createOrderDao();
             dao.save(newOrderInfo);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(daoHelperFactory);
     }
 }

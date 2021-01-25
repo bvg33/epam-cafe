@@ -5,12 +5,12 @@ import java.util.Objects;
 
 public class MenuDto implements Serializable {
     private int id;
-    private int price;
+    private double price;
     private int count;
     private String name;
     private String photo;
 
-    public MenuDto(int id, int price, String name, String photo) {
+    public MenuDto(int id, double price, String name, String photo) {
         this.id = id;
         this.price = price;
         this.name = name;
@@ -30,7 +30,7 @@ public class MenuDto implements Serializable {
         return id;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 

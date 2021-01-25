@@ -1,8 +1,8 @@
 package com.epam.web.dao.querycreator;
 
-import com.epam.web.entity.User;
-
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.StringJoiner;
 
 public class QueryCreator implements Creator {
 

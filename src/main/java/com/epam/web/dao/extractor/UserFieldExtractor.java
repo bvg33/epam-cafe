@@ -5,9 +5,9 @@ import com.epam.web.entity.User;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class UserFieldExtractor implements EntityFieldExtractor<User> {
-
     @Override
     public Map<String, String> parse(User user) {
         String password=user.getPassword();
@@ -30,4 +30,12 @@ public class UserFieldExtractor implements EntityFieldExtractor<User> {
         map.put("role",stringRole);
         return map;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        return true;
+    }
+
 }

@@ -7,11 +7,11 @@ import com.epam.web.entity.User;
 import com.epam.web.exceptions.DaoException;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Objects;
 
 public class GoToRolePageCommand implements Command {
     private static final String USER_PAGE = "WEB-INF/view/profile.jsp";
     private static final String ADMIN_PAGE = "command=goToAdminPage";
-
 
 
     @Override
@@ -23,5 +23,12 @@ public class GoToRolePageCommand implements Command {
         }else{
             return CommandResult.redirect(ADMIN_PAGE);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        return true;
     }
 }

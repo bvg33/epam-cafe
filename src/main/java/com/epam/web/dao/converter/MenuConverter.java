@@ -9,10 +9,10 @@ public class MenuConverter implements Converter<MenuDto, Menu> {
     public MenuDto convert(Menu entity) {
         String price=entity.getPrice();
         price=price.split(" ")[0];
-        int priceInt=Integer.parseInt(price);
+        double priceDouble=Double.parseDouble(price);
         String photo=entity.getPhoto();
         String name=entity.getName();
         int id=entity.getId();
-        return new MenuDto(id,priceInt,name,photo);
+        return new MenuDto(id,priceDouble,name,photo);
     }
 }

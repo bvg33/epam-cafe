@@ -4,9 +4,9 @@ import com.epam.web.entity.Order;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class OrderFieldExtractor implements EntityFieldExtractor<Order> {
-
     @Override
     public Map<String, String> parse(Order entity) {
         int id=entity.getId();
@@ -25,6 +25,12 @@ public class OrderFieldExtractor implements EntityFieldExtractor<Order> {
         map.put("type",type);
         map.put("user_id",userIdString);
         return map;
+    }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        return true;
     }
 }

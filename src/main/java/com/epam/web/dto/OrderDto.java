@@ -6,23 +6,29 @@ import com.sun.corba.se.spi.ior.Identifiable;
 import org.omg.CORBA_2_3.portable.OutputStream;
 
 public class OrderDto implements Identifiable {
+    private int id;
     private int price;
     private OrderStateEnum state;
     private String time;
-    private int order_id;
     private OrderTypeEnum cash;
     private String dishes;
     private String login;
-    public static final String TABLE="OrderDto";
+    private int rating;
+    public static final String  NAME="OrderDto";
 
-    public OrderDto(int price, OrderStateEnum state, String time, int order_id,String dishes,OrderTypeEnum cash,String name) {
+    public OrderDto(int id,int price, OrderStateEnum state, String time,String dishes,OrderTypeEnum cash,String name,int rating) {
+        this.id=id;
         this.price = price;
         this.state = state;
         this.time = time;
-        this.order_id = order_id;
         this.dishes=dishes;
         this.cash=cash;
         this.login=name;
+        this.rating=rating;
+    }
+
+    public int getRating() {
+        return rating;
     }
 
     public String getLogin() {
@@ -49,14 +55,9 @@ public class OrderDto implements Identifiable {
         return state;
     }
 
-
-    public int getOrder_id() {
-        return order_id;
-    }
-
     @Override
     public int getId() {
-        return 0;
+        return id;
     }
 
     @Override

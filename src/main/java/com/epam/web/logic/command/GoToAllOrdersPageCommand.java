@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class GoToAllOrdersPageCommand implements Command {
     private final GoToAllOrdersPageService service;
@@ -30,5 +31,18 @@ public class GoToAllOrdersPageCommand implements Command {
         context.addRequestAttribute("states",stateEnums);
         helper.updateRequest(context);
         return CommandResult.forward(PAGE);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GoToAllOrdersPageCommand that = (GoToAllOrdersPageCommand) o;
+        return Objects.equals(service, that.service);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(service);
     }
 }

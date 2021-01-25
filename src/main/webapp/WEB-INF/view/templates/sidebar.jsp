@@ -17,7 +17,7 @@
 <div class="sidebar">
     <form>
         <button type="submit"  class="sideButton" id="default" name="command" value="goToOrderPage">
-            <fmt:message bundle="${loc}" key="locale.order"/>
+            <fmt:message bundle="${loc}" key="locale.menu"/>
         </button>
     </form>
     <form>
