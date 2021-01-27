@@ -8,7 +8,9 @@ import com.epam.web.dao.helper.DaoHelperFactory;
 import com.epam.web.dao.menudao.MenuDaoImpl;
 import com.epam.web.dto.MenuDto;
 import com.epam.web.entity.Menu;
+import com.epam.web.exceptions.ConnectionException;
 import com.epam.web.exceptions.DaoException;
+import com.epam.web.exceptions.ServiceException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,34 +24,27 @@ public class AddToBucketService {
         this.daoHelperFactory = daoHelperFactory;
     }
 
-    public MenuDto createMenuDto(int id,Converter converter) throws DaoException {
-        try (DaoHelper daoHelper=daoHelperFactory.createDaoHelper()) {
-            Dao dao=daoHelper.createMenuDao();
-            Optional<Menu> menuOptional=dao.getById(id);
-            Menu menu=menuOptional.get();
+    public MenuDto createMenuDto(int id, Converter converter) throws ServiceException {
+        try (DaoHelper daoHelper = daoHelperFactory.createDaoHelper()) {
+            Dao dao = daoHelper.createMenuDao();
+            Optional<Menu> menuOptional = null;
+            menuOptional = dao.getById(id);
+            Menu menu = menuOptional.get();
             return (MenuDto) converter.convert(menu);
+        } catch (DaoException | ConnectionException e) {
+            throw new ServiceException(e.getMessage(), e);
         }
     }
-    public ArrayList<MenuDto> createBucket(MenuDto menuDto){
-        ArrayList<MenuDto> newBucket=new ArrayList<>();
+
+    public ArrayList<MenuDto> createBucket(MenuDto menuDto) {
+        ArrayList<MenuDto> newBucket = new ArrayList<>();
         newBucket.add(menuDto);
         return newBucket;
     }
-    public void updateBucket(MenuDto menuDto,ArrayList<MenuDto> bucket){
-        int index=bucket.indexOf(menuDto);
-        menuDto=bucket.get(index);
+
+    public void updateBucket(MenuDto menuDto, ArrayList<MenuDto> bucket) {
+        int index = bucket.indexOf(menuDto);
+        menuDto = bucket.get(index);
         menuDto.incrementCount();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(daoHelperFactory);
     }
 }

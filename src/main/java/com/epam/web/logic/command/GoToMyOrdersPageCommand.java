@@ -23,7 +23,7 @@ public class GoToMyOrdersPageCommand implements Command {
     }
 
     @Override
-    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws DaoException, IOException, ServletException, ServiceException {
+    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws  ServiceException {
         RequestContext context=helper.createContext();
         User user= (User) context.getSessionAttribute("user");
         int userId=user.getId();
@@ -31,18 +31,5 @@ public class GoToMyOrdersPageCommand implements Command {
         context.addRequestAttribute("orders",dtos);
         helper.updateRequest(context);
         return CommandResult.forward(PAGE);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        GoToMyOrdersPageCommand that = (GoToMyOrdersPageCommand) o;
-        return Objects.equals(service, that.service);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(service);
     }
 }

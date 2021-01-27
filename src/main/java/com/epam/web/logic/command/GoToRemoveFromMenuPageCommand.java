@@ -4,6 +4,7 @@ import com.epam.web.context.RequestContext;
 import com.epam.web.context.RequestContextHelper;
 import com.epam.web.entity.Menu;
 import com.epam.web.exceptions.DaoException;
+import com.epam.web.exceptions.ServiceException;
 import com.epam.web.logic.service.OrderPageService;
 
 import javax.servlet.ServletException;
@@ -21,24 +22,11 @@ public class GoToRemoveFromMenuPageCommand implements Command {
     }
 
     @Override
-    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws DaoException, IOException, ServletException {
+    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws ServiceException, IOException, ServletException {
         List<Menu> menuList=service.getMenuFromBd();
         RequestContext context=helper.createContext();
         context.addSessionAttribute("menuList",menuList);
         helper.updateRequest(context);
         return CommandResult.forward(PAGE);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        GoToRemoveFromMenuPageCommand that = (GoToRemoveFromMenuPageCommand) o;
-        return Objects.equals(service, that.service);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(service);
     }
 }

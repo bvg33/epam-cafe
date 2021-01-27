@@ -22,7 +22,7 @@ public class MakeAnOrderService {
         this.daoHelperFactory = daoHelperFactory;
     }
 
-    public int createNextOrderNumber() throws DaoException {
+    public int createNextOrderNumber() throws ServiceException {
         int id;
         try (DaoHelper daoHelper = daoHelperFactory.createDaoHelper()) {
             OrderDao dao = daoHelper.createOrderDao();
@@ -31,51 +31,43 @@ public class MakeAnOrderService {
                 return 1;
             }
             id = orders.get(orders.size()-1).getId()+1;
+        }catch (DaoException | ConnectionException e) {
+            throw new ServiceException(e.getMessage(), e);
         }
         return id;
     }
 
-    public void takeOrder(ArrayList<Bucket> buckets, Order order) throws ServiceException {
-        DaoHelper daoHelper = daoHelperFactory.createDaoHelper();
-        try {
-            daoHelper.startTransaction();
-            OrderDao orderDao = daoHelper.createOrderDao();
-            Dao bucketDao = daoHelper.createBucketDao();
-            orderDao.save(order);
-            for (Bucket bucket : buckets) {
-                bucketDao.save(bucket);
-            }
-            daoHelper.commit();
-        } catch (ConnectionException | DaoException e) {
+    public void takeOrder(ArrayList<Bucket> buckets, Order order) throws ServiceException{
+        try (DaoHelper daoHelper = daoHelperFactory.createDaoHelper()) {
             try {
-                daoHelper.rollBack();
-            } catch (ConnectionException ex) {
-                throw new ServiceException("RollBack exception",ex);
+                daoHelper.startTransaction();
+                OrderDao orderDao = daoHelper.createOrderDao();
+                Dao bucketDao = daoHelper.createBucketDao();
+                orderDao.save(order);
+                for (Bucket bucket : buckets) {
+                    bucketDao.save(bucket);
+                }
+                daoHelper.commit();
+            } catch (ConnectionException | DaoException e) {
+                try {
+                    daoHelper.rollBack();
+                } catch (ConnectionException ex) {
+                    throw new ServiceException("RollBack exception", ex);
+                }
+                throw new ServiceException(e.getMessage(), e);
+            } finally {
+                try {
+                    daoHelper.endTransaction();
+                } catch (ConnectionException e) {
+                    e.printStackTrace();
+                }
             }
+        } catch (ConnectionException e) {
             throw new ServiceException(e.getMessage(),e);
-        }finally {
-            try {
-                daoHelper.endTransaction();
-                daoHelper.close();
-            } catch (ConnectionException e) {
-                e.printStackTrace();
-            }
         }
     }
 
     public boolean isValidCVC(String cvc, AbstractValidator validator) {
         return validator.isValid(cvc);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(daoHelperFactory);
     }
 }

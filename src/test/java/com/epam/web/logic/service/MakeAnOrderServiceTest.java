@@ -23,7 +23,7 @@ public class MakeAnOrderServiceTest {
         when(validator.isValid(anyString())).thenReturn(true);
         MakeAnOrderService service=new MakeAnOrderService(new DaoHelperFactory());
         boolean actual=service.isValidCVC("123",validator);
-        Assert.assertEquals(true,actual);
+        Assert.assertTrue(actual);
     }
 
     @Test

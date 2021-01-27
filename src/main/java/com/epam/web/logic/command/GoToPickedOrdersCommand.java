@@ -22,24 +22,11 @@ public class GoToPickedOrdersCommand implements Command {
     }
 
     @Override
-    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws DaoException, IOException, ServletException, ServiceException {
+    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws ServiceException {
         List<OrderDto> orders=service.getPickedOrders();
         RequestContext context=helper.createContext();
         context.addRequestAttribute("orders",orders);
         helper.updateRequest(context);
         return CommandResult.forward(PAGE);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        GoToPickedOrdersCommand that = (GoToPickedOrdersCommand) o;
-        return Objects.equals(service, that.service);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(service);
     }
 }

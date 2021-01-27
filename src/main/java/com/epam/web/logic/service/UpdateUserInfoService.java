@@ -5,7 +5,9 @@ import com.epam.web.dao.helper.DaoHelperFactory;
 import com.epam.web.dao.userdao.UserDao;
 import com.epam.web.entity.User;
 import com.epam.web.enums.UserInfoResponseEnum;
+import com.epam.web.exceptions.ConnectionException;
 import com.epam.web.exceptions.DaoException;
+import com.epam.web.exceptions.ServiceException;
 import com.epam.web.logic.validator.AbstractValidator;
 import com.epam.web.logic.validator.CardNumberValidator;
 import com.epam.web.logic.validator.LoginValidator;
@@ -23,12 +25,17 @@ public class UpdateUserInfoService {
     }
 
     public UserInfoResponseEnum isUpdatableInfo(String newLogin, String newName, String newCardNumber, int id,
-                                                UserNameValidator userNameValidator,LoginValidator loginValidator,
-                                                CardNumberValidator cardNumberValidator) throws DaoException {
+                                                UserNameValidator userNameValidator, LoginValidator loginValidator,
+                                                CardNumberValidator cardNumberValidator) throws ServiceException {
         UserInfoResponseEnum result = null;
         try (DaoHelper daoHelper = daoHelperFactory.createDaoHelper()) {
             UserDao dao = daoHelper.createUserDao();
-            Optional<User> userResult = dao.findUserByLogin(newLogin);
+            Optional<User> userResult = null;
+            try {
+                userResult = dao.findUserByLogin(newLogin);
+            } catch (DaoException e) {
+                throw new ServiceException(e.getMessage(), e);
+            }
             if ((userResult.isPresent() && userResult.get().getId() != id) || !loginValidator.isValid(newLogin)) {
                 result = UserInfoResponseEnum.WRONG_LOGIN;
             } else if (!userNameValidator.isValid(newName)) {
@@ -38,26 +45,18 @@ public class UpdateUserInfoService {
             } else {
                 result = UserInfoResponseEnum.OK;
             }
+        } catch (ConnectionException e) {
+            throw new ServiceException(e.getMessage(),e);
         }
         return result;
     }
 
-    public void updateInfo(User newUserInfo) throws DaoException {
+    public void updateInfo(User newUserInfo) throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.createDaoHelper()) {
             UserDao dao = daoHelper.createUserDao();
             dao.save(newUserInfo);
+        } catch (DaoException | ConnectionException e) {
+            throw new ServiceException(e.getMessage(), e);
         }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(daoHelperFactory);
     }
 }

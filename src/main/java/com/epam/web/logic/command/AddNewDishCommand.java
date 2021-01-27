@@ -5,6 +5,7 @@ import com.epam.web.context.RequestContextHelper;
 import com.epam.web.entity.Menu;
 import com.epam.web.enums.NewDishResponseEnum;
 import com.epam.web.exceptions.DaoException;
+import com.epam.web.exceptions.ServiceException;
 import com.epam.web.logic.service.AddNewDishService;
 import com.epam.web.logic.validator.AbstractValidator;
 import com.epam.web.logic.validator.LengthValidator;
@@ -27,7 +28,7 @@ public class AddNewDishCommand implements Command {
     }
 
     @Override
-    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws DaoException, IOException, ServletException {
+    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws IOException, ServletException, ServiceException {
         RequestContext context = helper.createContext();
         String name = context.getRequestParameter("name");
         String price = context.getRequestParameter("price")+" BYN";
@@ -50,16 +51,4 @@ public class AddNewDishCommand implements Command {
         return CommandResult.forward(CURRENT_PAGE);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AddNewDishCommand that = (AddNewDishCommand) o;
-        return Objects.equals(service, that.service);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(service);
-    }
 }

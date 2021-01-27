@@ -7,7 +7,9 @@ import com.epam.web.dao.menudao.MenuDaoImpl;
 import com.epam.web.dao.userdao.UserDao;
 import com.epam.web.entity.Menu;
 import com.epam.web.enums.NewDishResponseEnum;
+import com.epam.web.exceptions.ConnectionException;
 import com.epam.web.exceptions.DaoException;
+import com.epam.web.exceptions.ServiceException;
 import com.epam.web.logic.validator.AbstractValidator;
 import com.epam.web.logic.validator.LengthValidator;
 import com.epam.web.logic.validator.PriceValidator;
@@ -31,7 +33,7 @@ public class AddNewDishService {
         return UUID.randomUUID().toString()+fileName;
     }
 
-    public void saveFile(String fileName, Part part) throws ServletException {
+    public void saveFile(String fileName, Part part) throws  ServiceException {
         File file = new File(fileName);
         byte buffer[]=new byte[(int) part.getSize()];
         try(InputStream is=part.getInputStream();
@@ -41,13 +43,15 @@ public class AddNewDishService {
             fos.write(buffer);
             fos.flush();
         } catch (IOException e) {
-            throw new ServletException("Save file exception",e);
+            throw new ServiceException("Save file exception",e);
         }
     }
-    public void addToMenu(Menu menu) throws DaoException {
+    public void addToMenu(Menu menu) throws ServiceException {
         try (DaoHelper daoHelper=daoHelperFactory.createDaoHelper()) {
             Dao dao=daoHelper.createMenuDao();
             dao.save(menu);
+        }catch (DaoException | ConnectionException e) {
+            throw new ServiceException(e.getMessage(), e);
         }
     }
 
@@ -58,17 +62,5 @@ public class AddNewDishService {
             return NewDishResponseEnum.WRONG_NAME;
         }
         return NewDishResponseEnum.OK;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(daoHelperFactory);
     }
 }

@@ -17,17 +17,4 @@ public class GoToPageCommand implements Command {
     public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) {
         return CommandResult.forward(page);
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        GoToPageCommand that = (GoToPageCommand) o;
-        return Objects.equals(page, that.page);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(page);
-    }
 }

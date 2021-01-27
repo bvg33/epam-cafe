@@ -12,7 +12,7 @@ public class Order implements Identifiable {
     private OrderStateEnum state;
     private String time;
     private int userId;
-    public static final String TABLE="epamweb.order";
+    public static final String TABLE="epamweb.orders";
 
     public Order(int id, String price, OrderTypeEnum type, OrderStateEnum state, String time, int userId) {
         this.id = id;

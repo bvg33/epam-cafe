@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
-    private static final String FIND_BY_LOGIN_AND_PASSWORD = "select * from " + User.TABLE + " where login=? and password=? and points>0";
+    private static final String FIND_BY_LOGIN_AND_PASSWORD = "select * from " + User.TABLE + " where login=? and password=SHA1(?) and points>0";
     private static final String FIND_BY_LOGIN = "select * from " + User.TABLE + " where login=?";
     private static final String FIND_USERS_BY_ROLE = "select * from " + User.TABLE + " where role=?";
 

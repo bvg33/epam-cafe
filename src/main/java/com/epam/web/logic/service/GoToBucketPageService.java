@@ -39,14 +39,6 @@ public class GoToBucketPageService {
         if(chislo<10){
             stringChislo="0"+stringChislo;
         }
-        return String.valueOf(year)+"-"+stringMonth+"-"+stringChislo;
+        return year +"-"+stringMonth+"-"+stringChislo;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        return true;
-    }
-
 }

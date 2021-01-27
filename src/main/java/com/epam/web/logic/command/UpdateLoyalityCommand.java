@@ -5,6 +5,7 @@ import com.epam.web.context.RequestContextHelper;
 import com.epam.web.entity.Role;
 import com.epam.web.entity.User;
 import com.epam.web.exceptions.DaoException;
+import com.epam.web.exceptions.ServiceException;
 import com.epam.web.logic.service.UpdateLoyalityService;
 
 import javax.jws.soap.SOAPBinding;
@@ -20,7 +21,7 @@ public class UpdateLoyalityCommand implements Command {
     }
 
     @Override
-    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws DaoException {
+    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws ServiceException {
         RequestContext context=helper.createContext();
         String id=context.getRequestParameter("id");
         int intId=Integer.parseInt(id);
@@ -41,18 +42,5 @@ public class UpdateLoyalityCommand implements Command {
         String name=user.getName();
         String password=user.getPassword();
         return new User(id,login,password,name,cardNumber,loyality,role);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UpdateLoyalityCommand that = (UpdateLoyalityCommand) o;
-        return Objects.equals(service, that.service);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(service);
     }
 }

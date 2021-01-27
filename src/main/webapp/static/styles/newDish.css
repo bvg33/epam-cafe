@@ -1,0 +1,36 @@
+.workplace{
+    background: #fffdd0;
+    width: 100%;
+    height: 100%;
+}
+.page-info{
+    padding-left: 45%;
+    padding-top:20px;
+}
+.info{
+    font-size: 25px;
+    padding-top: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    color: #316dba;
+}
+.value{
+    height: 45px;
+    width: 350px;
+    margin-top: 10px;
+    font-size: 25px;
+}
+.add-dish{
+    background-color: #316dba;
+    color: white;
+    padding: 16px 20px;
+    margin: 10px 0;
+    border: none;
+    cursor: pointer;
+    width: 350px;
+}
+.error{
+    color: red;
+    padding-left: 15%;
+}

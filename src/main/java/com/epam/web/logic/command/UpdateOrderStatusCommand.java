@@ -22,7 +22,7 @@ public class UpdateOrderStatusCommand implements Command {
     }
 
     @Override
-    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws DaoException, IOException, ServletException, ServiceException {
+    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws  ServiceException {
         RequestContext context=helper.createContext();
         String state=context.getRequestParameter("state").toUpperCase();
         String idString=context.getRequestParameter("id");
@@ -41,18 +41,5 @@ public class UpdateOrderStatusCommand implements Command {
         String time=order.getTime();
         int userId=order.getUserId();
         return new Order(id,price,type,stateEnum,time,userId);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UpdateOrderStatusCommand that = (UpdateOrderStatusCommand) o;
-        return Objects.equals(service, that.service);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(service);
     }
 }

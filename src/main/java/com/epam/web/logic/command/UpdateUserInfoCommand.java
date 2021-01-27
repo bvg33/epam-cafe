@@ -6,6 +6,7 @@ import com.epam.web.entity.Role;
 import com.epam.web.entity.User;
 import com.epam.web.enums.UserInfoResponseEnum;
 import com.epam.web.exceptions.DaoException;
+import com.epam.web.exceptions.ServiceException;
 import com.epam.web.logic.service.UpdateUserInfoService;
 import com.epam.web.logic.validator.CardNumberValidator;
 import com.epam.web.logic.validator.LoginValidator;
@@ -25,7 +26,7 @@ public class UpdateUserInfoCommand implements Command {
     }
 
     @Override
-    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws DaoException {
+    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws ServiceException {
         User currentUser = (User) helper.getRequest().getSession().getAttribute("user");
         RequestContext context = helper.createContext();
         String newLogin = context.getRequestParameter("login");
@@ -56,18 +57,5 @@ public class UpdateUserInfoCommand implements Command {
         int loylity = currentUser.getLoyality();
         Role role = currentUser.getRole();
         return new User(id, newLogin, password, newName, newCardNumber, loylity, role);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UpdateUserInfoCommand that = (UpdateUserInfoCommand) o;
-        return Objects.equals(service, that.service);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(service);
     }
 }

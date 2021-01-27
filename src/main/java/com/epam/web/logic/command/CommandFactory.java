@@ -4,58 +4,82 @@ import com.epam.web.dao.helper.DaoHelperFactory;
 import com.epam.web.logic.service.*;
 
 public class CommandFactory {
+    private static final String LOGIN="login";
+    private static final String LANGUAGE="language";
+    private static final String LOGOUT="logout";
+    private static final String TO_ORDER_PAGE="goToOrderPage";
+    private static final String TO_LOGIN="goToLogin";
+    private static final String TO_PROFILE="goToProfilePage";
+    private static final String TO_MY_ORDERS="goToMyOrdersPage";
+    private static final String TO_BUCKET="goToBucket";
+    private static final String TO_NEW_DISH_PAGE="goToNewDishPage";
+    private static final String TO_REMOVE_FROM_MENU="goToRemoveFromMenuPage";
+    private static final String CHECK_LOGIN="checkLogin";
+    private static final String UPDATE_USER_INFO="updateUserInfo";
+    private static final String ADD_TO_BUCKET="addToBucket";
+    private static final String REMOVE_FROM_BUCKET="removeFromBucket";
+    private static final String TO_ROLE_PAGE="goToRolePage";
+    private static final String TO_ADMIN_PAGE="goToAdminPage";
+    private static final String UPDATE_LOYALITY="updateLoyality";
+    private static final String ADD_NEW_DISH="addNewDish";
+    private static final String REMOVE_FROM_MENU="removeFromMenu";
+    private static final String MAKE_AN_ORDER="makeAnOrder";
+    private static final String TO_ALL_ORDERS_PAGE="goToAllOrdersPage";
+    private static final String UPDATE_ORDER_STATUS="updateOrderStatus";
+    private static final String TO_PICKED_ORDERS="goToPickedOrders";
+    private static final String EVALUATE_ORDER="evaluateOrder";
     public static Command createCommand(String command) {
         switch (command) {
-            case "login":
+            case LOGIN:
                 return new LoginCommand(new LoginService(new DaoHelperFactory()));
-            case "language":
+            case LANGUAGE:
                 return new LanguageCommand();
-            case "logout":
+            case LOGOUT:
                 return new LogoutCommand();
-            case "goToOrderPage":
+            case TO_ORDER_PAGE:
                 return new GoToOrderPageCommand(new OrderPageService(new DaoHelperFactory()));
-            case "goToLogin":
+            case TO_LOGIN:
                 return new GoToPageCommand("WEB-INF/view/login.jsp");
-            case "goToProfilePage":
+            case TO_PROFILE:
                 return new GoToPageCommand("WEB-INF/view/profile.jsp");
-            case "goToMyOrdersPage":
+            case TO_MY_ORDERS:
                 return new GoToMyOrdersPageCommand(new GoToMyOrdersPageService(new DaoHelperFactory()));
-            case "goToBucket":
+            case TO_BUCKET:
                 return new GoToBucketPageCommand(new GoToBucketPageService());
-            case "goToNewDishPage":
+            case TO_NEW_DISH_PAGE:
                 return new GoToPageCommand("WEB-INF/view/newDish.jsp");
-            case "goToRemoveFromMenuPage":
+            case TO_REMOVE_FROM_MENU:
                 return new GoToRemoveFromMenuPageCommand(new OrderPageService(new DaoHelperFactory()));
-            case "checkLogin":
+            case CHECK_LOGIN:
                 return new LoginCheckCommand(new LoginCheckService());
-            case "updateUserInfo":
+            case UPDATE_USER_INFO:
                 return new UpdateUserInfoCommand(new UpdateUserInfoService(new DaoHelperFactory()));
-            case "addToBucket":
+            case ADD_TO_BUCKET:
                 return new AddToBucketCommand(new AddToBucketService(new DaoHelperFactory()));
-            case "removeFromBucket":
+            case REMOVE_FROM_BUCKET:
                 return new RemoveFromBucketCommand(new RemoveFromBucketService());
-            case "goToRolePage":
+            case TO_ROLE_PAGE:
                 return new GoToRolePageCommand();
-            case "goToAdminPage":
+            case TO_ADMIN_PAGE:
                 return new GoToAdminPageCommand(new GoToAdminPageService(new DaoHelperFactory()));
-            case "updateLoyality":
+            case UPDATE_LOYALITY:
                 return new UpdateLoyalityCommand(new UpdateLoyalityService(new DaoHelperFactory()));
-            case "addNewDish":
+            case ADD_NEW_DISH:
                 return new AddNewDishCommand(new AddNewDishService(new DaoHelperFactory()));
-            case "removeFromMenu":
+            case REMOVE_FROM_MENU:
                 return new RemoveFromMenuCommand(new RemoveFromMenuService(new DaoHelperFactory()));
-            case "makeAnOrder":
+            case MAKE_AN_ORDER:
                 return new MakeAnOrderCommand(new MakeAnOrderService(new DaoHelperFactory()));
-            case "goToAllOrdersPage":
+            case TO_ALL_ORDERS_PAGE:
                 return new GoToAllOrdersPageCommand(new GoToAllOrdersPageService(new DaoHelperFactory()));
-            case "updateOrderStatus":
+            case UPDATE_ORDER_STATUS:
                 return new UpdateOrderStatusCommand(new UpdateOrderStatusService(new DaoHelperFactory()));
-            case "goToPickedOrders":
+            case TO_PICKED_ORDERS:
                 return new GoToPickedOrdersCommand(new GoToPickedOrdersService(new DaoHelperFactory()));
-            case "evaluateOrder":
+            case EVALUATE_ORDER:
                 return new EvaluateOrderCommand(new EvaluateOrderService(new DaoHelperFactory()));
             default:
-                throw new IllegalArgumentException("Illegal string");
+                throw new IllegalArgumentException("Illegal command");
         }
     }
 }

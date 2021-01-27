@@ -39,17 +39,8 @@
                                 <ctg:date date="${dish.getTime()}"/>
                             </td>
                             <td>
-                                <c:choose>
-                                    <c:when test="${sessionScope.local=='en'}">
-                                        ${dish.getState().getEng()}
-                                    </c:when>
-                                    <c:when test="${sessionScope.local=='ru'}">
-                                        ${dish.getState().getRu()}
-                                    </c:when>
-                                    <c:when test="${sessionScope.local=='by'}">
-                                        ${dish.getState().getBy()}
-                                    </c:when>
-                                </c:choose>
+                                <fmt:message bundle="${loc}" key="locale.${dish.getState().getKey()}" var="currentDishState"/>
+                                <label class="label">${currentDishState}</label>
                             </td>
                             <c:if test="${dish.getRating()==0}">
                                 <form method="post"

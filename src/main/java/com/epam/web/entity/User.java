@@ -6,7 +6,7 @@ import org.omg.CORBA_2_3.portable.OutputStream;
 import java.io.Serializable;
 
 public class User implements Identifiable, Serializable {
-    public static final String TABLE = "user";
+    public static final String TABLE = "users";
     private int id;
     private String login;
     private String password;

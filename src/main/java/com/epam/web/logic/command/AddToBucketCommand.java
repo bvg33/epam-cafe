@@ -7,6 +7,7 @@ import com.epam.web.dao.menudao.MenuDaoImpl;
 import com.epam.web.dto.MenuDto;
 import com.epam.web.entity.Menu;
 import com.epam.web.exceptions.DaoException;
+import com.epam.web.exceptions.ServiceException;
 import com.epam.web.logic.service.AddToBucketService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -21,7 +22,7 @@ public class AddToBucketCommand implements Command {
     }
 
     @Override
-    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws DaoException {
+    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws ServiceException {
         RequestContext context=helper.createContext();
         String id=context.getRequestParameter("dishId");
         int intId=Integer.parseInt(id);
@@ -40,18 +41,5 @@ public class AddToBucketCommand implements Command {
         }
         helper.updateRequest(context);
         return CommandResult.forward(PAGE);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        AddToBucketCommand that = (AddToBucketCommand) o;
-        return Objects.equals(service, that.service);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(service);
     }
 }

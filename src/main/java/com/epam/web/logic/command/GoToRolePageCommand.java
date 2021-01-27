@@ -5,6 +5,7 @@ import com.epam.web.context.RequestContextHelper;
 import com.epam.web.entity.Role;
 import com.epam.web.entity.User;
 import com.epam.web.exceptions.DaoException;
+import com.epam.web.exceptions.ServiceException;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Objects;
@@ -15,7 +16,7 @@ public class GoToRolePageCommand implements Command {
 
 
     @Override
-    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws DaoException {
+    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws ServiceException {
         RequestContext context=helper.createContext();
         User user= (User) context.getSessionAttribute("user");
         if(user.getRole()== Role.USER){
@@ -23,12 +24,5 @@ public class GoToRolePageCommand implements Command {
         }else{
             return CommandResult.redirect(ADMIN_PAGE);
         }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        return true;
     }
 }

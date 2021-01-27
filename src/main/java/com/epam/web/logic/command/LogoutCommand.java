@@ -23,12 +23,4 @@ public class LogoutCommand implements Command {
         helper.updateRequest(context);
         return CommandResult.forward(LOGIN_PAGE_ADDRESS);
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        return true;
-    }
-
 }

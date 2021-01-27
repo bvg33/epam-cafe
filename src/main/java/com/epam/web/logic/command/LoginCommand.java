@@ -5,6 +5,7 @@ import com.epam.web.context.RequestContextHelper;
 import com.epam.web.entity.Role;
 import com.epam.web.entity.User;
 import com.epam.web.exceptions.DaoException;
+import com.epam.web.exceptions.ServiceException;
 import com.epam.web.logic.service.LoginService;
 
 import javax.servlet.http.Cookie;
@@ -27,7 +28,7 @@ public class LoginCommand implements Command {
     }
 
     @Override
-    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws DaoException {
+    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws ServiceException {
         RequestContext requestContext = helper.createContext();
         String password = requestContext.getRequestParameter(PASSWORD_PARAMETER);
         String login = requestContext.getRequestParameter(LOGIN_PARAMETER);
@@ -44,18 +45,5 @@ public class LoginCommand implements Command {
         requestContext.addRequestAttribute("errorMessage", true);
         helper.updateRequest(requestContext);
         return CommandResult.forward(LOGIN_PAGE_ADDRESS);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        LoginCommand that = (LoginCommand) o;
-        return Objects.equals(loginService, that.loginService);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(loginService);
     }
 }

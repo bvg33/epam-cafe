@@ -7,7 +7,9 @@ import com.epam.web.dao.userdao.UserDaoImpl;
 import com.epam.web.entity.Role;
 import com.epam.web.entity.User;
 import com.epam.web.enums.UserInfoResponseEnum;
+import com.epam.web.exceptions.ConnectionException;
 import com.epam.web.exceptions.DaoException;
+import com.epam.web.exceptions.ServiceException;
 import com.epam.web.logic.validator.CardNumberValidator;
 import com.epam.web.logic.validator.LoginValidator;
 import com.epam.web.logic.validator.UserNameValidator;
@@ -20,7 +22,7 @@ import static org.mockito.Mockito.when;
 
 public class UpdateUserInfoServiceTest {
     @Test
-    public void testIsUpdatableInfoShouldReturnOKWhenDataIsValid() throws DaoException {
+    public void testIsUpdatableInfoShouldReturnOKWhenDataIsValid() throws DaoException, ServiceException, ConnectionException {
         UserNameValidator userNameValidator= Mockito.mock(UserNameValidator.class);
         when(userNameValidator.isValid(anyString())).thenReturn(true);
         LoginValidator loginValidator= Mockito.mock(LoginValidator.class);
@@ -37,7 +39,7 @@ public class UpdateUserInfoServiceTest {
     }
 
     @Test
-    public void testIsUpdatableInfoShouldReturnWrongLoginWhenLoginIsNotValid() throws DaoException {
+    public void testIsUpdatableInfoShouldReturnWrongLoginWhenLoginIsNotValid() throws DaoException, ServiceException, ConnectionException {
         UserNameValidator userNameValidator= Mockito.mock(UserNameValidator.class);
         when(userNameValidator.isValid(anyString())).thenReturn(true);
         LoginValidator loginValidator= Mockito.mock(LoginValidator.class);
@@ -54,7 +56,7 @@ public class UpdateUserInfoServiceTest {
     }
 
     @Test
-    public void testIsUpdatableInfoShouldReturnWrongNameWhenNameIsNotValid() throws DaoException {
+    public void testIsUpdatableInfoShouldReturnWrongNameWhenNameIsNotValid() throws DaoException, ServiceException, ConnectionException {
         UserNameValidator userNameValidator= Mockito.mock(UserNameValidator.class);
         when(userNameValidator.isValid(anyString())).thenReturn(false);
         LoginValidator loginValidator= Mockito.mock(LoginValidator.class);
@@ -71,7 +73,7 @@ public class UpdateUserInfoServiceTest {
     }
 
     @Test
-    public void testIsUpdatableInfoShouldReturnWrongCardNumberWhenCardNumberIsNotValid() throws DaoException {
+    public void testIsUpdatableInfoShouldReturnWrongCardNumberWhenCardNumberIsNotValid() throws DaoException, ServiceException, ConnectionException {
         UserNameValidator userNameValidator= Mockito.mock(UserNameValidator.class);
         when(userNameValidator.isValid(anyString())).thenReturn(true);
         LoginValidator loginValidator= Mockito.mock(LoginValidator.class);
@@ -87,7 +89,7 @@ public class UpdateUserInfoServiceTest {
 
     }
 
-    private void mockDao(DaoHelperFactory daoHelperFactory) throws DaoException {
+    private void mockDao(DaoHelperFactory daoHelperFactory) throws DaoException, ConnectionException {
         DaoHelper helper=Mockito.mock(DaoHelper.class);
         UserDaoImpl dao=Mockito.mock(UserDaoImpl.class);
         User user=new User(1,"login","password","name","cardNumber",22, Role.USER);

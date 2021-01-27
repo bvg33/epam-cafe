@@ -1,26 +1,18 @@
 package com.epam.web.enums;
 
 public enum OrderStateEnum {
-    ACCEPT("Accept","Принят","Прынят"),PREPARING("Preparing","Готовится","Гатуецца"),
-    FINISH("Finish","Закончен","Закончан"),PICKED_UP("Picked_up","Забран","Забран");
+    ACCEPT("Accept","accept"),PREPARING("Preparing","preparing"),
+    FINISH("Finish","finish"),PICKED_UP("Picked_up","picked");
     private String eng;
-    private String ru;
-    private String by;
-    OrderStateEnum(String eng, String ru, String by) {
+    private String key;
+    OrderStateEnum(String eng,String key) {
         this.eng=eng;
-        this.ru=ru;
-        this.by=by;
+        this.key=key;
     }
 
     public String getEng() {
         return eng;
     }
 
-    public String getRu() {
-        return ru;
-    }
-
-    public String getBy() {
-        return by;
-    }
+    public String getKey() {return key; }
 }

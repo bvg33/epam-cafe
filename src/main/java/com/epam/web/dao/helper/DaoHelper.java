@@ -39,7 +39,7 @@ public class DaoHelper implements AutoCloseable {
 
 
     @Override
-    public void close() {
+    public void close() throws ConnectionException {
         connection.close();
     }
 

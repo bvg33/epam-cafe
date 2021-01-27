@@ -6,7 +6,9 @@ import com.epam.web.dao.orderdtodao.OrderDtoDao;
 import com.epam.web.dao.orderdtodao.OrderDtoDaoImpl;
 import com.epam.web.dao.userdao.UserDao;
 import com.epam.web.dto.OrderDto;
+import com.epam.web.exceptions.ConnectionException;
 import com.epam.web.exceptions.DaoException;
+import com.epam.web.exceptions.ServiceException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,22 +21,12 @@ public class GoToPickedOrdersService {
         this.daoHelperFactory = daoHelperFactory;
     }
 
-    public List<OrderDto> getPickedOrders() throws DaoException {
-        try (DaoHelper daoHelper=daoHelperFactory.createDaoHelper()) {
-            OrderDtoDao dao=daoHelper.createOrderDtoDao();
+    public List<OrderDto> getPickedOrders() throws ServiceException {
+        try (DaoHelper daoHelper = daoHelperFactory.createDaoHelper()) {
+            OrderDtoDao dao = daoHelper.createOrderDtoDao();
             return dao.getAllCollectedOrders();
+        } catch (DaoException | ConnectionException e) {
+            throw new ServiceException(e.getMessage(), e);
         }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(daoHelperFactory);
     }
 }

@@ -1,6 +1,7 @@
 package com.epam.web.customtag;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
@@ -20,7 +21,9 @@ public class DateTag extends TagSupport {
     public int doStartTag() throws JspException {
         String result = date;
         HttpServletRequest request= (HttpServletRequest) this.pageContext.getRequest();
-        if(request.getSession().getAttribute("local").equals("en")==false) {
+        HttpSession session=request.getSession();
+        String local= (String) session.getAttribute("local");
+        if(!local.equals("en")) {
             result = date.replaceAll("-", ".");
         }
         result=result.substring(0,result.length()-DELETED_SYMBOLS);

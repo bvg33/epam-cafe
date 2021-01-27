@@ -29,7 +29,7 @@ public class MakeAnOrderCommand implements Command {
     }
 
     @Override
-    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws DaoException, ServiceException {
+    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws ServiceException, ServiceException {
         RequestContext context=helper.createContext();
         String ids[]=helper.getRequest().getParameterValues("dishId");
         String counts[]=helper.getRequest().getParameterValues("count");
@@ -65,18 +65,5 @@ public class MakeAnOrderCommand implements Command {
             arrayList.add(bucket);
         }
         return arrayList;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MakeAnOrderCommand that = (MakeAnOrderCommand) o;
-        return Objects.equals(service, that.service);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(service);
     }
 }

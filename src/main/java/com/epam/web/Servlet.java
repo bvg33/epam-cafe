@@ -18,30 +18,27 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class Servlet extends HttpServlet {
-    //todo спросить про констрейнты и дтодао,спросить про локализацию енамов в заказах
     private static final String COMMAND = "command";
-    private static final String PATH = "/epam_cafe_war_exploded/controller?"; //todo for idea
-    //private static final String PATH = "/web/controller?"; //todo for tomcat
+    private static final String PATH = "/epam_cafe_war_exploded/controller?"; //for idea
+    //private static final String PATH = "/web/controller?"; //for tomcat
     private static final Logger LOGGER=Logger.getLogger(Servlet.class);
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        BasicConfigurator.configure();
         try {
             process(req, resp);
-        } catch (DaoException | ServiceException e) {
-            LOGGER.info(e.getMessage());
+        } catch (ServiceException e) {
+            LOGGER.error(e.getMessage());
             throw new ServletException(e.getMessage(),e);
         }
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        BasicConfigurator.configure();
         try {
             process(req, resp);
-        } catch (DaoException | ServiceException e) {
-            LOGGER.info(e.getMessage());
+        } catch (ServiceException e) {
+            LOGGER.error(e.getMessage());
             throw new ServletException(e.getMessage(),e);
         }
 
@@ -53,11 +50,11 @@ public class Servlet extends HttpServlet {
             ConnectionPool.getInstance().destroy();
             super.destroy();
         } catch (ConnectionException e) {
-            LOGGER.info(e.getMessage(),e);
+            LOGGER.error(e.getMessage(),e);
         }
     }
 
-    private void process(HttpServletRequest req, HttpServletResponse resp) throws DaoException, ServletException, IOException, ServiceException {
+    private void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceException {
         String commandParameter = req.getParameter(COMMAND);
         Command command = CommandFactory.createCommand(commandParameter);
         RequestContextHelper contextHelper = new RequestContextHelper(req);

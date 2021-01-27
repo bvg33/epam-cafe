@@ -8,7 +8,9 @@ import com.epam.web.dao.menudao.MenuDaoImpl;
 import com.epam.web.dto.MenuDto;
 import com.epam.web.entity.Menu;
 import com.epam.web.enums.NewDishResponseEnum;
+import com.epam.web.exceptions.ConnectionException;
 import com.epam.web.exceptions.DaoException;
+import com.epam.web.exceptions.ServiceException;
 import com.epam.web.logic.validator.AbstractValidator;
 import com.epam.web.logic.validator.LengthValidator;
 import com.epam.web.logic.validator.PriceValidator;
@@ -25,7 +27,7 @@ import static org.mockito.Mockito.when;
 public class AddToBucketServiceTest {
 
     @Test
-    public void testCreateMenuDtoShouldReturnMenuDtoWhenDataIsCorrect() throws DaoException {
+    public void testCreateMenuDtoShouldReturnMenuDtoWhenDataIsCorrect() throws ServiceException, DaoException, ConnectionException {
         DaoHelperFactory daoHelperFactory = Mockito.mock(DaoHelperFactory.class);
         DaoHelper daoHelper=Mockito.mock(DaoHelper.class);
         MenuDaoImpl dao=Mockito.mock(MenuDaoImpl.class);
@@ -41,7 +43,7 @@ public class AddToBucketServiceTest {
     }
 
     @Test(expected = DaoException.class)
-    public void testCreateMenuDtoShouldThrowExceptionWhenDataIsNotCorrect() throws DaoException {
+    public void testCreateMenuDtoShouldThrowExceptionWhenDataIsNotCorrect() throws ServiceException, DaoException, ConnectionException {
         DaoHelperFactory daoHelperFactory = Mockito.mock(DaoHelperFactory.class);
         DaoHelper daoHelper=Mockito.mock(DaoHelper.class);
         MenuDaoImpl dao=Mockito.mock(MenuDaoImpl.class);
@@ -66,7 +68,7 @@ public class AddToBucketServiceTest {
         Assert.assertEquals(expected,actual);
     }
 
-    private void mock(DaoHelper daoHelper, DaoHelperFactory daoHelperFactory, MenuConverter converter, MenuDaoImpl dao, MenuDto dto){
+    private void mock(DaoHelper daoHelper, DaoHelperFactory daoHelperFactory, MenuConverter converter, MenuDaoImpl dao, MenuDto dto) throws ConnectionException {
         when(daoHelper.createMenuDao()).thenReturn(dao);
         when(daoHelperFactory.createDaoHelper()).thenReturn(daoHelper);
         when(converter.convert(anyObject())).thenReturn(dto);

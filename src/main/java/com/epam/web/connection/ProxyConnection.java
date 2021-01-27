@@ -89,7 +89,7 @@ public class ProxyConnection implements Connection {
     }
 
     @Override
-    public void close()  {
+    public void close() throws ConnectionException {
         ConnectionPool.getInstance().releaseConnection(this);
     }
 

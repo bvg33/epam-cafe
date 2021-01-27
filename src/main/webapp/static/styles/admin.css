@@ -1,0 +1,17 @@
+.workplace{
+    background: #fffdd0;
+    width: 100%;
+    height: 100%;
+}
+.page-info{
+    padding-left: 30%;
+    padding-top:20px;
+}
+#table td{
+    padding: 37px;
+    border: 1px solid #316dba;
+}
+.apply-button{
+    background:#02d5f8;
+    height:35px;
+}

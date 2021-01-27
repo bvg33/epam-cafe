@@ -20,7 +20,7 @@ public class EvaluateOrderCommand implements Command {
     }
 
     @Override
-    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws DaoException, IOException, ServletException, ServiceException {
+    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws  ServiceException {
         RequestContext context=helper.createContext();
         Rating rating=createRating(context);
         service.evaluateOrder(rating);
@@ -33,18 +33,5 @@ public class EvaluateOrderCommand implements Command {
         String orderIdString=context.getRequestParameter("orderId");
         int  orderId=Integer.valueOf(orderIdString);
         return new Rating(0,orderId,rating);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        EvaluateOrderCommand that = (EvaluateOrderCommand) o;
-        return Objects.equals(service, that.service);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(service);
     }
 }
