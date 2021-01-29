@@ -9,29 +9,30 @@ import java.sql.SQLException;
 import java.util.Objects;
 
 public class UserRowMapper implements RowMapper<User> {
+    private static final String LOGIN="login";
+    private static final String PASSWORD="password";
+    private static final String NAME="name";
+    private static final String CARD_NUMBER="cardNumber";
+    private static final String ID="id";
+    private static final String POINTS="points";
+    private static final String ROLE="role";
     @Override
     public User map(ResultSet resultSet) throws DaoException {
         User user=null;
         try {
-            String login = resultSet.getString("login");
-            String password=resultSet.getString("password");
-            String name=resultSet.getString("name");
-            String cardNumber=resultSet.getString("cardnumber");
-            int loyality=resultSet.getInt("points");
-            int id=resultSet.getInt("id");
-            String roleString=resultSet.getString("role");
+            String login = resultSet.getString(LOGIN);
+            String password=resultSet.getString(PASSWORD);
+            String name=resultSet.getString(NAME);
+            String cardNumber=resultSet.getString(CARD_NUMBER);
+            int loyality=resultSet.getInt(POINTS);
+            int id=resultSet.getInt(ID);
+            String roleString=resultSet.getString(ROLE);
             Role role=Role.valueOf(roleString.toUpperCase());
             user=new User(id,login,password,name,cardNumber,loyality,role);
         } catch (SQLException e) {
-            throw new DaoException("Result set exception");
+            throw new DaoException(e.getMessage(),e);
         }
         return user;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        return true;
-    }
 }

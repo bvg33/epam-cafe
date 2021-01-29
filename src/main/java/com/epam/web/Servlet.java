@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class Servlet extends HttpServlet {
+    //todo дописать тесты на сервисы
     private static final String COMMAND = "command";
     private static final String PATH = "/epam_cafe_war_exploded/controller?"; //for idea
     //private static final String PATH = "/web/controller?"; //for tomcat

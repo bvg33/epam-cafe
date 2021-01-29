@@ -15,7 +15,7 @@ import java.util.Optional;
 public abstract class AbstractQueryExecutor <T extends Identifiable> {
     private final RowMapper<T> rowMapper;
     private final ProxyConnection connection;
-
+    private static final String EXCEPTION_ARGUMENT="More then one record found";
     public AbstractQueryExecutor(RowMapper<T> rowMapper, ProxyConnection connection) {
         this.rowMapper = rowMapper;
         this.connection = connection;
@@ -28,7 +28,7 @@ public abstract class AbstractQueryExecutor <T extends Identifiable> {
         } else if (items.size() == 1) {
             return Optional.of(items.get(0));
         } else if (items.size() > 1) {
-            throw new IllegalArgumentException("More then one record found");
+            throw new IllegalArgumentException(EXCEPTION_ARGUMENT);
         }
         return Optional.empty();
     }
@@ -39,7 +39,7 @@ public abstract class AbstractQueryExecutor <T extends Identifiable> {
              ResultSet resultSet = statement.executeQuery()) {
             entities = createEntitiesList(resultSet);
         } catch (SQLException e) {
-            throw new DaoException("Execute query exception ", e);
+            throw new DaoException(e.getMessage(), e);
         }
         return entities;
     }
@@ -62,7 +62,7 @@ public abstract class AbstractQueryExecutor <T extends Identifiable> {
             }
             return preparedStatement;
         } catch (SQLException e) {
-            throw new DaoException("Prepare Statement exception", e);
+            throw new DaoException(e.getMessage(), e);
         }
     }
 
@@ -74,7 +74,7 @@ public abstract class AbstractQueryExecutor <T extends Identifiable> {
                 entities.add(entity);
             }
         } catch (SQLException | DaoException e) {
-            throw new DaoException("create Entities List Exception");
+            throw new DaoException(e.getMessage(),e);
         }
         return entities;
     }

@@ -18,6 +18,8 @@ import java.util.Optional;
 public class LoginCommand implements Command {
     private static final String PASSWORD_PARAMETER = "password";
     private static final String LOGIN_PARAMETER = "login";
+    private static final String USER="user";
+    private static final String ERROR_MESSAGE="errorMessage";
     private static final String GOTO_MAIN_PAGE_ADDRESS = "command=goToOrderPage";
     private static final String GOTO_ADMIN_PAGE_ADDRESS = "command=goToAdminPage";
     private static final String LOGIN_PAGE_ADDRESS = "WEB-INF/view/login.jsp";
@@ -34,7 +36,7 @@ public class LoginCommand implements Command {
         String login = requestContext.getRequestParameter(LOGIN_PARAMETER);
         Optional<User> optionalResult = loginService.login(password, login);
         if (optionalResult.isPresent()) {
-            requestContext.addSessionAttribute("user", optionalResult.get());
+            requestContext.addSessionAttribute(USER, optionalResult.get());
             helper.updateRequest(requestContext);
             if (optionalResult.get().getRole() == Role.USER) {
                 return CommandResult.redirect(GOTO_MAIN_PAGE_ADDRESS);
@@ -42,7 +44,7 @@ public class LoginCommand implements Command {
                 return CommandResult.redirect(GOTO_ADMIN_PAGE_ADDRESS);
             }
         }
-        requestContext.addRequestAttribute("errorMessage", true);
+        requestContext.addRequestAttribute(ERROR_MESSAGE, true);
         helper.updateRequest(requestContext);
         return CommandResult.forward(LOGIN_PAGE_ADDRESS);
     }

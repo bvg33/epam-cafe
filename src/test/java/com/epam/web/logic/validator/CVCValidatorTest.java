@@ -10,13 +10,13 @@ public class CVCValidatorTest {
     public void testCVCValidatorShouldReturnTrueWhenDataIsCorrect(){
         String testString="233";
         boolean actual=validator.isValid(testString);
-        Assert.assertEquals(true,actual);
+        Assert.assertTrue(actual);
     }
 
     @Test
     public void testCVCValidatorShouldReturnFalseWhenDataIsNotCorrect(){
         String testString="23";
         boolean actual=validator.isValid(testString);
-        Assert.assertEquals(false,actual);
+        Assert.assertFalse(actual);
     }
 }

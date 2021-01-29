@@ -14,7 +14,7 @@ import java.util.Objects;
 
 public class GoToAdminPageService {
     private DaoHelperFactory daoHelperFactory;
-
+    private static final String USER="user";
     public GoToAdminPageService(DaoHelperFactory daoHelperFactory) {
         this.daoHelperFactory = daoHelperFactory;
     }
@@ -22,7 +22,7 @@ public class GoToAdminPageService {
     public List<User> findUsers() throws ServiceException {
         try (DaoHelper daoHelper = daoHelperFactory.createDaoHelper()) {
             UserDao dao = daoHelper.createUserDao();
-            return dao.findUsersByRole("user");
+            return dao.findUsersByRole(USER);
         } catch (DaoException | ConnectionException e) {
             throw new ServiceException(e.getMessage(), e);
         }

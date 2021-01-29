@@ -8,32 +8,27 @@ public class RowMapperFactoryTest {
     @Test
     public void testCreateMapperShouldReturnUserRowMapperWhenTableNameIsUser(){
         RowMapper<User> actual=RowMapperFactory.createMapper(User.TABLE);
-        RowMapper<User> expected=new UserRowMapper();
-        Assert.assertEquals(expected,actual);
+        Assert.assertEquals(UserRowMapper.class,actual.getClass());
     }
     @Test
     public void testCreateMapperShouldReturnMenuRowMapperWhenTableNameIsMenu(){
         RowMapper<Menu> actual=RowMapperFactory.createMapper(Menu.TABLE);
-        RowMapper<Menu> expected=new MenuRowMapper();
-        Assert.assertEquals(expected,actual);
+        Assert.assertEquals(MenuRowMapper.class,actual.getClass());
     }
     @Test
     public void testCreateMapperShouldReturnOrderRowMapperWhenTableNameIsOrder(){
         RowMapper<Order> actual=RowMapperFactory.createMapper(Order.TABLE);
-        RowMapper<Order> expected=new OrderRowMapper();
-        Assert.assertEquals(expected,actual);
+        Assert.assertEquals(OrderRowMapper.class,actual.getClass());
     }
     @Test
     public void testCreateMapperShouldReturnBucketRowMapperWhenTableNameIsBucket(){
         RowMapper<Bucket> actual=RowMapperFactory.createMapper(Bucket.TABLE);
-        RowMapper<Bucket> expected=new BucketRowMapper();
-        Assert.assertEquals(expected,actual);
+        Assert.assertEquals(BucketRowMapper.class,actual.getClass());
     }
     @Test
     public void testCreateMapperShouldReturnRatingRowMapperWhenTableNameIsRating(){
         RowMapper<Rating> actual=RowMapperFactory.createMapper(Rating.TABLE);
-        RowMapper<Rating> expected=new RatingRowMapper();
-        Assert.assertEquals(expected,actual);
+        Assert.assertEquals(RatingRowMapper.class,actual.getClass());
     }
     @Test(expected = IllegalArgumentException.class)
     public void testCreateMapperShouldThrowExceptionWhenTableNameIsNotCorrect() {

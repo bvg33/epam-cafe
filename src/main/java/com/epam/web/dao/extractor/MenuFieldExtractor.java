@@ -7,6 +7,12 @@ import java.util.Map;
 import java.util.Objects;
 
 public class MenuFieldExtractor implements EntityFieldExtractor<Menu>{
+    private static final String IS_ACTIVE="is_active";
+    private static final String ID="id";
+    private static final String NAME="name";
+    private static final String PRICE="price";
+    private static final String PHOTO="photo";
+
     @Override
     public Map<String, String> parse(Menu entity) {
         int id =entity.getId();
@@ -17,18 +23,12 @@ public class MenuFieldExtractor implements EntityFieldExtractor<Menu>{
         int isActive=entity.getIsActive();
         String isActiveString=String.valueOf(isActive);
         Map<String,String>result=new HashMap<>();
-        result.put("is_active",isActiveString);
-        result.put("id",stringId);
-        result.put("name",name);
-        result.put("price",price);
-        result.put("photo",photo);
+        result.put(IS_ACTIVE,isActiveString);
+        result.put(ID,stringId);
+        result.put(NAME,name);
+        result.put(PRICE,price);
+        result.put(PHOTO,photo);
         return result;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        return true;
-    }
 }

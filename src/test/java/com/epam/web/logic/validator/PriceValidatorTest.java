@@ -10,13 +10,13 @@ public class PriceValidatorTest {
     public void testPriceValidatorShouldReturnTrueWhenDataIsCorrect(){
         String testString="2.5 BYN";
         boolean actual=validator.isValid(testString);
-        Assert.assertEquals(true,actual);
+        Assert.assertTrue(actual);
     }
 
     @Test
     public void testPriceValidatorShouldReturnFalseWhenDataIsNotCorrect(){
         String testString="2.5 dsffBYN";
         boolean actual=validator.isValid(testString);
-        Assert.assertEquals(false,actual);
+        Assert.assertFalse(actual);
     }
 }

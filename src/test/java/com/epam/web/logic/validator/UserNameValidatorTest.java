@@ -10,12 +10,12 @@ public class UserNameValidatorTest {
     public void testUserNameValidatorShouldReturnTrueWhenDataIsCorrect(){
         String testString="Dima";
         boolean actual=validator.isValid(testString);
-        Assert.assertEquals(true,actual);
+        Assert.assertTrue(actual);
     }
     @Test
     public void testUserNameValidatorShouldReturnFalseWhenDataIsNotCorrect(){
         String testString="dima";
         boolean actual=validator.isValid(testString);
-        Assert.assertEquals(false,actual);
+        Assert.assertFalse(actual);
     }
 }

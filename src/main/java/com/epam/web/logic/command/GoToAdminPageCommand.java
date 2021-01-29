@@ -14,7 +14,7 @@ import java.util.Objects;
 public class GoToAdminPageCommand implements Command {
     private final GoToAdminPageService service;
     private static final String ADMIN_PAGE = "WEB-INF/view/admin.jsp";
-
+    private static final String USERS="users";
     public GoToAdminPageCommand(GoToAdminPageService service) {
         this.service = service;
     }
@@ -23,7 +23,7 @@ public class GoToAdminPageCommand implements Command {
     public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws ServiceException {
         RequestContext context = helper.createContext();
         List<User> users = service.findUsers();
-        context.addRequestAttribute("users", users);
+        context.addRequestAttribute(USERS, users);
         helper.updateRequest(context);
         return CommandResult.forward(ADMIN_PAGE);
     }

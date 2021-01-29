@@ -7,6 +7,13 @@ import java.util.Map;
 import java.util.Objects;
 
 public class OrderFieldExtractor implements EntityFieldExtractor<Order> {
+    private static final String ID="id";
+    private static final String PRICE="price";
+    private static final String STATE="state";
+    private static final String TIME="time";
+    private static final String TYPE="type";
+    private static final String USER_ID="user_id";
+
     @Override
     public Map<String, String> parse(Order entity) {
         int id=entity.getId();
@@ -18,19 +25,13 @@ public class OrderFieldExtractor implements EntityFieldExtractor<Order> {
         String idString=String.valueOf(id);
         String userIdString=String.valueOf(userId);
         Map<String,String> map=new HashMap<>();
-        map.put("id",idString);
-        map.put("price",price);
-        map.put("state",state);
-        map.put("time",time);
-        map.put("type",type);
-        map.put("user_id",userIdString);
+        map.put(ID,idString);
+        map.put(PRICE,price);
+        map.put(STATE,state);
+        map.put(TIME,time);
+        map.put(TYPE,type);
+        map.put(USER_ID,userIdString);
         return map;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        return true;
-    }
 }

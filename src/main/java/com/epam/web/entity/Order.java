@@ -5,6 +5,8 @@ import com.epam.web.enums.OrderTypeEnum;
 import com.sun.corba.se.spi.ior.Identifiable;
 import org.omg.CORBA_2_3.portable.OutputStream;
 
+import java.util.Objects;
+
 public class Order implements Identifiable {
     private int id;
     private String price;
@@ -50,5 +52,23 @@ public class Order implements Identifiable {
     @Override
     public void write(OutputStream arg0) {
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return id == order.id &&
+                userId == order.userId &&
+                Objects.equals(price, order.price) &&
+                type == order.type &&
+                state == order.state &&
+                Objects.equals(time, order.time);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, price, type, state, time, userId);
     }
 }

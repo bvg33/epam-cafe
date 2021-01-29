@@ -28,6 +28,10 @@ public class CommandFactory {
     private static final String UPDATE_ORDER_STATUS="updateOrderStatus";
     private static final String TO_PICKED_ORDERS="goToPickedOrders";
     private static final String EVALUATE_ORDER="evaluateOrder";
+    private static final String LOGIN_PAGE="WEB-INF/view/login.jsp";
+    private static final String PROFILE_PAGE="WEB-INF/view/profile.jsp";
+    private static final String NEW_DISH_PAGE="WEB-INF/view/newDish.jsp";
+    private static final String ERROR="Illegal Command";
     public static Command createCommand(String command) {
         switch (command) {
             case LOGIN:
@@ -39,15 +43,15 @@ public class CommandFactory {
             case TO_ORDER_PAGE:
                 return new GoToOrderPageCommand(new OrderPageService(new DaoHelperFactory()));
             case TO_LOGIN:
-                return new GoToPageCommand("WEB-INF/view/login.jsp");
+                return new GoToPageCommand(LOGIN_PAGE);
             case TO_PROFILE:
-                return new GoToPageCommand("WEB-INF/view/profile.jsp");
+                return new GoToPageCommand(PROFILE_PAGE);
             case TO_MY_ORDERS:
                 return new GoToMyOrdersPageCommand(new GoToMyOrdersPageService(new DaoHelperFactory()));
             case TO_BUCKET:
                 return new GoToBucketPageCommand(new GoToBucketPageService());
             case TO_NEW_DISH_PAGE:
-                return new GoToPageCommand("WEB-INF/view/newDish.jsp");
+                return new GoToPageCommand(NEW_DISH_PAGE);
             case TO_REMOVE_FROM_MENU:
                 return new GoToRemoveFromMenuPageCommand(new OrderPageService(new DaoHelperFactory()));
             case CHECK_LOGIN:
@@ -79,7 +83,7 @@ public class CommandFactory {
             case EVALUATE_ORDER:
                 return new EvaluateOrderCommand(new EvaluateOrderService(new DaoHelperFactory()));
             default:
-                throw new IllegalArgumentException("Illegal command");
+                throw new IllegalArgumentException(ERROR);
         }
     }
 }

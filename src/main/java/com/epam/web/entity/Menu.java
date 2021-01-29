@@ -4,6 +4,7 @@ import com.sun.corba.se.spi.ior.Identifiable;
 import org.omg.CORBA_2_3.portable.OutputStream;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Menu implements Identifiable, Serializable {
     public static final String TABLE="menu";
@@ -45,5 +46,22 @@ public class Menu implements Identifiable, Serializable {
     @Override
     public void write(OutputStream arg0) {
 
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Menu menu = (Menu) o;
+        return id == menu.id &&
+                isActive == menu.isActive &&
+                Objects.equals(name, menu.name) &&
+                Objects.equals(price, menu.price) &&
+                Objects.equals(photo, menu.photo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, price, photo, isActive);
     }
 }

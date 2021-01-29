@@ -13,12 +13,12 @@ import java.util.Objects;
 public class GoToRolePageCommand implements Command {
     private static final String USER_PAGE = "WEB-INF/view/profile.jsp";
     private static final String ADMIN_PAGE = "command=goToAdminPage";
-
+    private static final String USER="user";
 
     @Override
-    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws ServiceException {
+    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) {
         RequestContext context=helper.createContext();
-        User user= (User) context.getSessionAttribute("user");
+        User user= (User) context.getSessionAttribute(USER);
         if(user.getRole()== Role.USER){
             return CommandResult.forward(USER_PAGE);
         }else{

@@ -24,6 +24,15 @@ public class MakeAnOrderCommand implements Command {
     private final MakeAnOrderService service;
     private static final String PAGE="WEB-INF/view/bucket.jsp";
     private static final String ERROR_PAGE="command=goToBucket&error=true";
+    private static final String DISH_ID="dishId";
+    private static final String COUNT="coumt";
+    private static final String PRICE="price";
+    private static final String ISSUE_TIME="issue-time";
+    private static final String CASH="cash";
+    private static final String CVC="cvc";
+    private static final String BUCKET="bucket";
+    private static final String USER="user";
+
     public MakeAnOrderCommand(MakeAnOrderService service) {
         this.service = service;
     }
@@ -31,12 +40,12 @@ public class MakeAnOrderCommand implements Command {
     @Override
     public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws ServiceException, ServiceException {
         RequestContext context=helper.createContext();
-        String ids[]=helper.getRequest().getParameterValues("dishId");
-        String counts[]=helper.getRequest().getParameterValues("count");
-        String price=context.getRequestParameter("price");
-        String time=context.getRequestParameter("issue-time");
-        String typeString=context.getRequestParameter("cash");
-        String cvc=context.getRequestParameter("cvc");
+        String ids[]=helper.getRequest().getParameterValues(DISH_ID);
+        String counts[]=helper.getRequest().getParameterValues(COUNT);
+        String price=context.getRequestParameter(PRICE);
+        String time=context.getRequestParameter(ISSUE_TIME);
+        String typeString=context.getRequestParameter(CASH);
+        String cvc=context.getRequestParameter(CVC);
         if(!service.isValidCVC(cvc,new CVCValidator())){
             return CommandResult.redirect(ERROR_PAGE);
         }
@@ -45,13 +54,13 @@ public class MakeAnOrderCommand implements Command {
         Order order=createOrder(price,time,context,type);
         ArrayList<Bucket>buckets=createBuckets(ids,counts,nextOrderNumber);
         service.takeOrder(buckets,order);
-        context.removeSessionAttribute("bucket");
+        context.removeSessionAttribute(BUCKET);
         helper.updateRequest(context);
         return CommandResult.forward(PAGE);
     }
 
     private Order createOrder(String price,String time,RequestContext context,OrderTypeEnum type){
-        User user= (User) context.getSessionAttribute("user");
+        User user= (User) context.getSessionAttribute(USER);
         int userId=user.getId();
         return new Order(0,price,type,OrderStateEnum.ACCEPT,time,userId);
     }

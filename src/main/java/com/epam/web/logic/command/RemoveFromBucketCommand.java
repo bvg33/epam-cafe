@@ -15,17 +15,19 @@ import java.util.Objects;
 public class RemoveFromBucketCommand implements Command {
     private static final String PAGE="WEB-INF/view/bucket.jsp";
     private final RemoveFromBucketService service;
+    private static final String ID="id";
+    private static final String BUCKET="bucket";
 
     public RemoveFromBucketCommand(RemoveFromBucketService service) {
         this.service = service;
     }
 
     @Override
-    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws ServiceException {
+    public CommandResult execute(RequestContextHelper helper, HttpServletResponse response)  {
         RequestContext context = helper.createContext();
-        String id = context.getRequestParameter("id");
+        String id = context.getRequestParameter(ID);
         int intId = Integer.parseInt(id);
-        ArrayList<MenuDto> bucket = (ArrayList<MenuDto>) context.getSessionAttribute("bucket");
+        ArrayList<MenuDto> bucket = (ArrayList<MenuDto>) context.getSessionAttribute(BUCKET);
         service.remove(bucket,intId);
         return CommandResult.forward(PAGE);
     }

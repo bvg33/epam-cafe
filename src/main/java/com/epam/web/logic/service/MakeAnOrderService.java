@@ -52,7 +52,7 @@ public class MakeAnOrderService {
                 try {
                     daoHelper.rollBack();
                 } catch (ConnectionException ex) {
-                    throw new ServiceException("RollBack exception", ex);
+                    throw new ServiceException(ex.getMessage(), ex);
                 }
                 throw new ServiceException(e.getMessage(), e);
             } finally {

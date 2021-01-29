@@ -9,7 +9,10 @@ import java.io.IOException;
 public class DateTag extends TagSupport {
     private String date;
     private static final int DELETED_SYMBOLS=5;
-
+    private static final String REGEX="-";
+    private static final String REPLACEMENT=".";
+    private static final String LOCALE_ATTRIBUTE="locale";
+    private static final String EN_LOCALE="en";
     public DateTag() {
     }
 
@@ -22,15 +25,15 @@ public class DateTag extends TagSupport {
         String result = date;
         HttpServletRequest request= (HttpServletRequest) this.pageContext.getRequest();
         HttpSession session=request.getSession();
-        String local= (String) session.getAttribute("local");
-        if(!local.equals("en")) {
-            result = date.replaceAll("-", ".");
+        String local= (String) session.getAttribute(LOCALE_ATTRIBUTE);
+        if(!local.equals(EN_LOCALE)) {
+            result = date.replaceAll(REGEX, REPLACEMENT);
         }
         result=result.substring(0,result.length()-DELETED_SYMBOLS);
         try {
             pageContext.getOut().write(result);
         } catch (IOException e) {
-            throw new JspException("Tag exception");
+            throw new JspException(e.getMessage(),e);
         }
         return SKIP_BODY;
     }

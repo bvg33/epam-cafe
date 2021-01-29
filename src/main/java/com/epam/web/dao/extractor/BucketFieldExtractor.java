@@ -7,6 +7,11 @@ import java.util.Map;
 import java.util.Objects;
 
 public class BucketFieldExtractor implements EntityFieldExtractor<Bucket> {
+    private static final String DISH_ID="dish_id";
+    private static final String ID="id";
+    private static final String ORDER_ID="order_id";
+    private static final String COUNT="count";
+
     @Override
     public Map<String, String> parse(Bucket entity) {
         int dishId=entity.getDishId();
@@ -18,17 +23,11 @@ public class BucketFieldExtractor implements EntityFieldExtractor<Bucket> {
         String stringOrderNumber=String.valueOf(orderNumber);
         String stringCount=String.valueOf(count);
         Map<String,String> map=new HashMap<>();
-        map.put("dish_id",stringDishId);
-        map.put("id",stringId);
-        map.put("order_id",stringOrderNumber);
-        map.put("count",stringCount);
+        map.put(DISH_ID,stringDishId);
+        map.put(ID,stringId);
+        map.put(ORDER_ID,stringOrderNumber);
+        map.put(COUNT,stringCount);
         return map;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        return true;
-    }
 }

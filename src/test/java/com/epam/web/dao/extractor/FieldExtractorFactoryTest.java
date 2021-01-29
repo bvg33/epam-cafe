@@ -8,31 +8,26 @@ public class FieldExtractorFactoryTest {
     @Test
     public void testCreateFieldExtractorShouldReturnUserFieldExtractorWhenTableNameIsUser(){
         EntityFieldExtractor<User> actual=FieldExtractorFactory.createFieldExtractor(User.TABLE);
-        EntityFieldExtractor<User> expected=new UserFieldExtractor();
-        Assert.assertEquals(expected,actual);
+        Assert.assertEquals(UserFieldExtractor.class,actual.getClass());
     }
     @Test
     public void testCreateFieldExtractorShouldReturnMenuFieldExtractorWhenTableNameIsMenu(){
         EntityFieldExtractor<Menu> actual=FieldExtractorFactory.createFieldExtractor(Menu.TABLE);
-        EntityFieldExtractor<Menu> expected=new MenuFieldExtractor();
-        Assert.assertEquals(expected,actual);
+        Assert.assertEquals(MenuFieldExtractor.class,actual.getClass());
     }
     @Test
     public void testCreateFieldExtractorShouldReturnOrderFieldExtractorWhenTableNameIsOrder(){
         EntityFieldExtractor<Order> actual=FieldExtractorFactory.createFieldExtractor(Order.TABLE);
-        EntityFieldExtractor<Order> expected=new OrderFieldExtractor();
-        Assert.assertEquals(expected,actual);
+        Assert.assertEquals(OrderFieldExtractor.class,actual.getClass());
     }
     @Test
     public void testCreateFieldExtractorShouldReturnBucketFieldExtractorWhenTableNameIsBucket(){
         EntityFieldExtractor<Bucket> actual=FieldExtractorFactory.createFieldExtractor(Bucket.TABLE);
-        EntityFieldExtractor<Bucket> expected=new BucketFieldExtractor();
-        Assert.assertEquals(expected,actual);
+        Assert.assertEquals(BucketFieldExtractor.class,actual.getClass());
     }
     @Test
     public void testCreateFieldExtractorShouldReturnRatingFieldExtractorWhenTableNameIsRating(){
         EntityFieldExtractor<Rating> actual=FieldExtractorFactory.createFieldExtractor(Rating.TABLE);
-        EntityFieldExtractor<Rating> expected=new RatingFieldExtractor();
-        Assert.assertEquals(expected,actual);
+        Assert.assertEquals(RatingFieldExtractor.class,actual.getClass());
     }
 }

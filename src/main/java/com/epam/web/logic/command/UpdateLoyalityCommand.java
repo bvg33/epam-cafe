@@ -15,6 +15,9 @@ import java.util.Objects;
 public class UpdateLoyalityCommand implements Command {
     private final UpdateLoyalityService service;
     public static final String PAGE="command=goToAdminPage";
+    private static final String ID="id";
+    private static final String LOYALITY="loyality";
+
 
     public UpdateLoyalityCommand(UpdateLoyalityService service) {
         this.service = service;
@@ -23,9 +26,9 @@ public class UpdateLoyalityCommand implements Command {
     @Override
     public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws ServiceException {
         RequestContext context=helper.createContext();
-        String id=context.getRequestParameter("id");
+        String id=context.getRequestParameter(ID);
         int intId=Integer.parseInt(id);
-        String loyality=context.getRequestParameter("loyality");
+        String loyality=context.getRequestParameter(LOYALITY);
         int loyalityDelta=Integer.parseInt(loyality);
         User user=service.getUser(intId);
         User newUserInfo=createNewUserInfo(user,loyalityDelta);

@@ -17,6 +17,8 @@ import java.util.Objects;
 public class GoToMyOrdersPageCommand implements Command {
     private static final String PAGE="WEB-INF/view/myOrders.jsp";
     private final GoToMyOrdersPageService service;
+    private static final String USER="user";
+    private static final String ORDERS="orders";
 
     public GoToMyOrdersPageCommand(GoToMyOrdersPageService service) {
         this.service = service;
@@ -25,10 +27,10 @@ public class GoToMyOrdersPageCommand implements Command {
     @Override
     public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws  ServiceException {
         RequestContext context=helper.createContext();
-        User user= (User) context.getSessionAttribute("user");
+        User user= (User) context.getSessionAttribute(USER);
         int userId=user.getId();
         List<OrderDto> dtos=service.getAllUsersOrdersDto(userId);
-        context.addRequestAttribute("orders",dtos);
+        context.addRequestAttribute(ORDERS,dtos);
         helper.updateRequest(context);
         return CommandResult.forward(PAGE);
     }

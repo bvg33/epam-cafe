@@ -10,13 +10,13 @@ public class LengthValidatorTest {
     public void testLengthValidatorShouldReturnTrueWhenDataIsCorrect(){
         String testString="123456789";
         boolean actual=validator.isValid(testString);
-        Assert.assertEquals(true,actual);
+        Assert.assertTrue(actual);
     }
 
     @Test
     public void testLengthValidatorShouldReturnFalseWhenDataIsNotCorrect(){
         String testString="123456789012345678901234567890123456788";
         boolean actual=validator.isValid(testString);
-        Assert.assertEquals(false,actual);
+        Assert.assertFalse(actual);
     }
 }

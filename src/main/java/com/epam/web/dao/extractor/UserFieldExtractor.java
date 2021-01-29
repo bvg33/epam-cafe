@@ -8,6 +8,13 @@ import java.util.Map;
 import java.util.Objects;
 
 public class UserFieldExtractor implements EntityFieldExtractor<User> {
+    private static final String LOGIN="login";
+    private static final String PASSWORD="password";
+    private static final String NAME="name";
+    private static final String CARD_NUMBER="cardNumber";
+    private static final String ID="id";
+    private static final String POINTS="points";
+    private static final String ROLE="role";
     @Override
     public Map<String, String> parse(User user) {
         String password=user.getPassword();
@@ -21,21 +28,13 @@ public class UserFieldExtractor implements EntityFieldExtractor<User> {
         Role role=user.getRole();
         String stringRole=role.name();
         Map<String,String> map=new HashMap<>();
-        map.put("password",password);
-        map.put("login",login);
-        map.put("name",name);
-        map.put("cardNumber",cardNumber);
-        map.put("id",stringId);
-        map.put("points",stringLoyality);
-        map.put("role",stringRole);
+        map.put(PASSWORD,password);
+        map.put(LOGIN,login);
+        map.put(NAME,name);
+        map.put(CARD_NUMBER,cardNumber);
+        map.put(ID,stringId);
+        map.put(POINTS,stringLoyality);
+        map.put(ROLE,stringRole);
         return map;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        return true;
-    }
-
 }

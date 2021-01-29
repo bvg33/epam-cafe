@@ -17,6 +17,9 @@ import java.util.Objects;
 public class UpdateOrderStatusCommand implements Command {
     private final UpdateOrderStatusService service;
     private static final String COMMAND="command=goToAllOrdersPage";
+    private static final String STATE="state";
+    private static final String ID="id";
+
     public UpdateOrderStatusCommand(UpdateOrderStatusService service) {
         this.service = service;
     }
@@ -24,8 +27,8 @@ public class UpdateOrderStatusCommand implements Command {
     @Override
     public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws  ServiceException {
         RequestContext context=helper.createContext();
-        String state=context.getRequestParameter("state").toUpperCase();
-        String idString=context.getRequestParameter("id");
+        String state=context.getRequestParameter(STATE).toUpperCase();
+        String idString=context.getRequestParameter(ID);
         int id=Integer.parseInt(idString);
         Order order=service.getCurrentOrder(id);
         Order newOrderInfo=buildNewOrderInfo(state,order);

@@ -17,6 +17,7 @@ import java.util.Objects;
 public class GoToPickedOrdersCommand implements Command {
     private final GoToPickedOrdersService service;
     private static final String PAGE="WEB-INF/view/pickedOrders.jsp";
+    private static final String ORDERS="orders";
     public GoToPickedOrdersCommand(GoToPickedOrdersService service) {
         this.service = service;
     }
@@ -25,7 +26,7 @@ public class GoToPickedOrdersCommand implements Command {
     public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws ServiceException {
         List<OrderDto> orders=service.getPickedOrders();
         RequestContext context=helper.createContext();
-        context.addRequestAttribute("orders",orders);
+        context.addRequestAttribute(ORDERS,orders);
         helper.updateRequest(context);
         return CommandResult.forward(PAGE);
     }

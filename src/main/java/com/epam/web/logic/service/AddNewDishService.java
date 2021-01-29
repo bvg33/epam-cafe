@@ -43,7 +43,7 @@ public class AddNewDishService {
             fos.write(buffer);
             fos.flush();
         } catch (IOException e) {
-            throw new ServiceException("Save file exception",e);
+            throw new ServiceException(e.getMessage(),e);
         }
     }
     public void addToMenu(Menu menu) throws ServiceException {

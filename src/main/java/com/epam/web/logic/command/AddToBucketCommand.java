@@ -15,6 +15,9 @@ import java.util.*;
 
 public class AddToBucketCommand implements Command {
     private static final String PAGE="WEB-INF/view/order.jsp";
+    private static final String DISH_ID="dishID";
+    private static final String BUCKET="bucket";
+
     private final AddToBucketService service;
 
     public AddToBucketCommand(AddToBucketService service) {
@@ -24,13 +27,13 @@ public class AddToBucketCommand implements Command {
     @Override
     public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws ServiceException {
         RequestContext context=helper.createContext();
-        String id=context.getRequestParameter("dishId");
+        String id=context.getRequestParameter(DISH_ID);
         int intId=Integer.parseInt(id);
         MenuDto menuDto=service.createMenuDto(intId,new MenuConverter());
-        ArrayList<MenuDto> bucket= (ArrayList<MenuDto>) context.getSessionAttribute("bucket");
+        ArrayList<MenuDto> bucket= (ArrayList<MenuDto>) context.getSessionAttribute(BUCKET);
         if(bucket==null){
             ArrayList<MenuDto> newBucket=  service.createBucket(menuDto);
-            context.addSessionAttribute("bucket",newBucket);
+            context.addSessionAttribute(BUCKET,newBucket);
             helper.updateRequest(context);
             return CommandResult.forward(PAGE);
         }

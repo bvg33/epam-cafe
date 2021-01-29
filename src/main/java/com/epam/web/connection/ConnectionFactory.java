@@ -11,13 +11,14 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class ConnectionFactory {
+    private static final String URL="url";
     static ProxyConnection createConnection() throws ConnectionException {
         ProxyConnection proxyConnection = null;
         try {
-            String url = "jdbc:mysql://localhost:3306/epamweb";
             Properties properties = new Properties();
             properties.load(ConnectionFactory.class.getClassLoader().getResourceAsStream("connection/dbConnection.properties"));
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+            String url =properties.getProperty(URL);
             proxyConnection = new ProxyConnection(DriverManager.getConnection(url, properties));
         } catch (IOException | SQLException e) {
             throw new ConnectionException(e.getMessage(),e);

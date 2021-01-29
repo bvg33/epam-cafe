@@ -7,7 +7,10 @@ import java.util.Map;
 import java.util.Objects;
 
 public class RatingFieldExtractor implements EntityFieldExtractor<Rating> {
-    int test;
+    private static final String ID="id";
+    private static final String ORDER_ID="order_id";
+    private static final String STARS="stars";
+
     @Override
     public Map<String, String> parse(Rating entity) {
         int id=entity.getId();
@@ -17,16 +20,10 @@ public class RatingFieldExtractor implements EntityFieldExtractor<Rating> {
         String orderIdString=String.valueOf(orderId);
         String starsString=String.valueOf(stars);
         Map<String,String> result=new HashMap<>();
-        result.put("id",idString);
-        result.put("order_id",orderIdString);
-        result.put("stars",starsString);
+        result.put(ID,idString);
+        result.put(ORDER_ID,orderIdString);
+        result.put(STARS,starsString);
         return result;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        return true;
-    }
 }

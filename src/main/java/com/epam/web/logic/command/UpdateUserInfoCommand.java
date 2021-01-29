@@ -20,6 +20,11 @@ public class UpdateUserInfoCommand implements Command {
 
     private static final String LOGOUT = "command=logout";
     private static final String CURRENT_PAGE = "WEB-INF/view/profile.jsp";
+    private static final String LOGIN="login";
+    private static final String NAME="name";
+    private static final String CARD_NUMBER="cardNumber";
+    private static final String ERROR="error";
+    private static final String USER="user";
 
     public UpdateUserInfoCommand(UpdateUserInfoService service) {
         this.service = service;
@@ -27,11 +32,11 @@ public class UpdateUserInfoCommand implements Command {
 
     @Override
     public CommandResult execute(RequestContextHelper helper, HttpServletResponse response) throws ServiceException {
-        User currentUser = (User) helper.getRequest().getSession().getAttribute("user");
+        User currentUser = (User) helper.getRequest().getSession().getAttribute(USER);
         RequestContext context = helper.createContext();
-        String newLogin = context.getRequestParameter("login");
-        String newName = context.getRequestParameter("name");
-        String newCardNumber = context.getRequestParameter("cardNumber");
+        String newLogin = context.getRequestParameter(LOGIN);
+        String newName = context.getRequestParameter(NAME);
+        String newCardNumber = context.getRequestParameter(CARD_NUMBER);
         int id = currentUser.getId();
         UserInfoResponseEnum isUpdatable = service.isUpdatableInfo(newLogin, newName, newCardNumber, id,new UserNameValidator(),
                 new LoginValidator(),new CardNumberValidator());
@@ -40,13 +45,13 @@ public class UpdateUserInfoCommand implements Command {
             service.updateInfo(newUserInfo);
             return CommandResult.redirect(LOGOUT);
         } else if (isUpdatable == UserInfoResponseEnum.WRONG_NAME) {
-            context.addRequestAttribute("error", isUpdatable.toString());
+            context.addRequestAttribute(ERROR, isUpdatable.toString());
             helper.updateRequest(context);
         } else if (isUpdatable == UserInfoResponseEnum.WRONG_LOGIN) {
-            context.addRequestAttribute("error", isUpdatable.toString());
+            context.addRequestAttribute(ERROR, isUpdatable.toString());
             helper.updateRequest(context);
         } else if (isUpdatable == UserInfoResponseEnum.WRONG_CARD_NUMBER) {
-            context.addRequestAttribute("error", isUpdatable.toString());
+            context.addRequestAttribute(ERROR, isUpdatable.toString());
             helper.updateRequest(context);
         }
         return CommandResult.forward(CURRENT_PAGE);

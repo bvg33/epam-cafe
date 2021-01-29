@@ -15,6 +15,8 @@ import java.util.Objects;
 public class EvaluateOrderCommand implements Command {
     private final EvaluateOrderService service;
     private static final String COMMAND="command=goToMyOrdersPage";
+    private static final String RATING="rating";
+    private static final String ORDER_ID="orderId";
     public EvaluateOrderCommand(EvaluateOrderService service) {
         this.service = service;
     }
@@ -28,9 +30,9 @@ public class EvaluateOrderCommand implements Command {
     }
 
     private Rating createRating(RequestContext context){
-        String ratingString=context.getRequestParameter("rating");
+        String ratingString=context.getRequestParameter(RATING);
         int rating=Integer.parseInt(ratingString);
-        String orderIdString=context.getRequestParameter("orderId");
+        String orderIdString=context.getRequestParameter(ORDER_ID);
         int  orderId=Integer.valueOf(orderIdString);
         return new Rating(0,orderId,rating);
     }
