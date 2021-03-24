@@ -1,0 +1,42 @@
+@media all and (max-width: 1920px) {
+    .sidebar {
+        position: absolute;
+        top: 110px;
+        width: 300px;
+        background-color: #02d5f8;
+        height: 98%;
+    }
+
+    .sideButton, .adminSideButton {
+        margin-left: 30px;
+        margin-top: 40px;
+        width: 240px;
+        height: 90px;
+        font-size: 30px;
+        color: #f1f1f1;
+        font-style: italic;
+        background: #316dba;
+        border: none;
+    }
+}
+@media all and (max-width: 1100px) {
+    .sidebar {
+        position: absolute;
+        top: 110px;
+        width: 200px;
+        background-color: #02d5f8;
+        height: 98%;
+    }
+
+    .sideButton, .adminSideButton {
+        margin-left: 20px;
+        margin-top: 40px;
+        width: 150px;
+        height: 50px;
+        font-size: 20px;
+        color: #f1f1f1;
+        font-style: italic;
+        background: #316dba;
+        border: none;
+    }
+}
